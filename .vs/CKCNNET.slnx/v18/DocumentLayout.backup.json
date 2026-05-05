@@ -1,0 +1,428 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\CKCNNET\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\home\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\home\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\home\\gamedetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\home\\gamedetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\authorization\\roleauthorizationattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\authorization\\roleauthorizationattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\models\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\models\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\models\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\models\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\models\\gameaccount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\models\\gameaccount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\models\\purchase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\models\\purchase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\auth\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\auth\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\auth\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\auth\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Search.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Search.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\Search.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Search.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Home\\Search.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:57:54.689Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GameDetails.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\GameDetails.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\GameDetails.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\GameDetails.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Home\\GameDetails.cshtml",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAAIcAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:57:23.152Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "CKCNNET\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAADwvy4AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:13:36.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "CKCNNET\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAIAxwAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:14:11.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADEAAAAAAAAAAADwv4cAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:14:41.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Cart.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Cart.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Models\\Cart.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Models\\Cart.cs",
+              "RelativeToolTip": "CKCNNET\\Models\\Cart.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAhwA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:13:27.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "CKCNNET\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:14:07.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAACIAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:14:21.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Models\\ErrorViewModel.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "CKCNNET\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:51:49.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RoleAuthorizationAttribute.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
+              "RelativeToolTip": "CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwBsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:14:02.09Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "GameAccount.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\GameAccount.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Models\\GameAccount.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Models\\GameAccount.cs",
+              "RelativeToolTip": "CKCNNET\\Models\\GameAccount.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAA6wBsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:13:17.322Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Order.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Order.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Models\\Order.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Models\\Order.cs",
+              "RelativeToolTip": "CKCNNET\\Models\\Order.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T02:29:31.762Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Purchase.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Purchase.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Models\\Purchase.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Models\\Purchase.cs",
+              "RelativeToolTip": "CKCNNET\\Models\\Purchase.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAuwBUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:13:31.597Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Role.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Role.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Models\\Role.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Models\\Role.cs",
+              "RelativeToolTip": "CKCNNET\\Models\\Role.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T02:31:11.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\User.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Models\\User.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Models\\User.cs",
+              "RelativeToolTip": "CKCNNET\\Models\\User.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA5wBUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T02:23:27.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Program.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Program.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Program.cs",
+              "RelativeToolTip": "CKCNNET\\Program.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAABAAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:15:15.005Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "_ViewStart.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\_ViewStart.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\_ViewStart.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\_ViewStart.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\_ViewStart.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:51:28.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Game.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Game.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Models\\Game.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Models\\Game.cs",
+              "RelativeToolTip": "CKCNNET\\Models\\Game.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:13:09.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\_ViewImports.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\_ViewImports.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:51:27.865Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Privacy.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Privacy.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\Privacy.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Privacy.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Home\\Privacy.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:51:25.727Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Auth\\Login.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Auth\\Login.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Auth\\Login.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Auth\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:14:36.687Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Auth\\Register.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Auth\\Register.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Auth\\Register.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Auth\\Register.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:14:31.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\appsettings.json",
+              "RelativeDocumentMoniker": "CKCNNET\\appsettings.json",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\appsettings.json",
+              "RelativeToolTip": "CKCNNET\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-05T09:15:28.433Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Services\\AuthService.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Services\\AuthService.cs",
+              "RelativeToolTip": "CKCNNET\\Services\\AuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:13:56.647Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

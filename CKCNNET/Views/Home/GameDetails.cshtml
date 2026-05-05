@@ -1,0 +1,138 @@
+@model IEnumerable<GameAccount>
+
+@{
+    ViewData["Title"] = ViewBag.CurrentGame.Name;
+}
+
+<div class="container-fluid bg-primary text-white py-4">
+    <div class="container">
+        <div class="d-flex align-items-center gap-3">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-light btn-sm">← Quay lại</a>
+            <div>
+                <h1 class="mb-0">@ViewBag.CurrentGame.Name</h1>
+                <p class="mb-0 small">@ViewBag.CurrentGame.Description</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h3 class="mb-4">📦 Các Account Đang Bán (@Model.Count())</h3>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var account in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm account-card">
+                        <div class="card-header bg-success text-white">
+                            <h6 class="mb-0">💰 @account.Price.ToString("N0") VND</h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">@account.Description</p>
+
+                            <div class="mb-3">
+                                <strong>Người bán:</strong>
+                                <span class="badge bg-info">@account.Seller.Username</span>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(account.Username))
+                            {
+                                <div class="alert alert-warning alert-sm" role="alert">
+                                    <small>
+                                        <strong>⚠️ Tài khoản & mật khẩu</strong> sẽ được hiển thị sau khi thanh toán
+                                    </small>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-info alert-sm" role="alert">
+                                    <small>
+                                        <strong>ℹ️ Liên hệ người bán</strong> để biết thêm chi tiết về account
+                                    </small>
+                                </div>
+                            }
+
+                            <div class="mb-3">
+                                <strong>Liên hệ:</strong>
+                                <p class="text-muted small">@account.ContactInfo</p>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary flex-grow-1" onclick="addToCart(@account.Id)">
+                                    🛒 Thêm vào giỏ
+                                </button>
+                                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detailModal@(account.Id)">
+                                    👁️ Chi tiết
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted small">
+                            <small>Đăng: @account.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detail Modal -->
+                <div class="modal fade" id="detailModal@(account.Id)" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Chi tiết Account - @ViewBag.CurrentGame.Name</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Giá:</strong> @account.Price.ToString("N0") VND</p>
+                                <p><strong>Mô tả:</strong> @account.Description</p>
+                                <p><strong>Người bán:</strong> @account.Seller.Username</p>
+                                <p><strong>Liên hệ:</strong> @account.ContactInfo</p>
+                                <p><strong>Đăng lúc:</strong> @account.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary" onclick="addToCart(@account.Id)">
+                                    🛒 Thêm vào giỏ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <h5>😢 Không có account nào</h5>
+            <p>Hiện chưa có account nào của game <strong>@ViewBag.CurrentGame.Name</strong> đang được bán. 
+            Vui lòng quay lại sau!</p>
+        </div>
+    }
+</div>
+
+<style>
+    .account-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .account-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .alert-sm {
+        margin-bottom: 0;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .card-header {
+        padding: 1rem;
+    }
+</style>
+
+<script>
+    function addToCart(accountId) {
+        alert('Tính năng thêm vào giỏ sẽ được cập nhật sớm! ID: ' + accountId);
+    }
+</script>

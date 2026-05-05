@@ -1,0 +1,48 @@
+@model IEnumerable<GameAccount>
+
+@{
+    ViewData["Title"] = "Kết quả tìm kiếm";
+}
+
+<div class="container-fluid bg-info text-white py-4">
+    <div class="container">
+        <h1>🔍 Kết quả tìm kiếm: "@ViewBag.SearchQuery"</h1>
+        <p class="mb-0">Tìm thấy @Model.Count() account phù hợp</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var account in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h6 class="mb-0">@account.Game.Name - @account.Price.ToString("N0") VND</h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">@account.Description</p>
+                            <p class="text-muted small">Người bán: <strong>@account.Seller.Username</strong></p>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary btn-sm flex-grow-1">🛒 Thêm vào giỏ</button>
+                                <a href="@Url.Action("GameDetails", "Home", new { gameId = account.GameId })" 
+                                   class="btn btn-outline-secondary btn-sm">Xem game</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <h5>😢 Không tìm thấy kết quả nào</h5>
+            <p>Không có account nào phù hợp với tìm kiếm "<strong>@ViewBag.SearchQuery</strong>". 
+            <a href="@Url.Action("Index", "Home")">Quay lại trang chủ</a></p>
+        </div>
+    }
+</div>
