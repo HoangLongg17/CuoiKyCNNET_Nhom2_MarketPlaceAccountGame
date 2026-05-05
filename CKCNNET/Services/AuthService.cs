@@ -39,7 +39,6 @@ namespace CKCNNET.Services
                 PasswordHash = HashPassword(password),
                 PhoneNumber = phoneNumber,
                 RoleId = 1, // User role
-                IsSellerApproved = false,
                 CreatedAt = DateTime.Now
             };
 

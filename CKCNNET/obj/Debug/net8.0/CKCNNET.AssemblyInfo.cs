@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CKCNNET")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a47232ae8cbd32d68092f84441b8cb1b49fa0d5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ca5bf94fa347639032662f1f567db63a4d5e9db")]
 [assembly: System.Reflection.AssemblyProductAttribute("CKCNNET")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CKCNNET")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

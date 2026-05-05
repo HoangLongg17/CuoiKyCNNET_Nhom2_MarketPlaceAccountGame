@@ -16,7 +16,6 @@ namespace CKCNNET.Models
         public int RoleId { get; set; }
         public Role? Role { get; set; }
         
-        public bool IsSellerApproved { get; set; } // Duyệt seller
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         

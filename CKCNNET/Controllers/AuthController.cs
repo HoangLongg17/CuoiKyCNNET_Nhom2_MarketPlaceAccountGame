@@ -105,7 +105,7 @@ namespace CKCNNET.Controllers
             return View(user);
         }
 
-        // Đăng ký làm Seller
+        // Đăng ký làm Seller - Thay đổi Role
         [HttpPost]
         public async Task<IActionResult> RegisterAsSeller(string reason, string bankAccount, string bankAccountHolder)
         {
@@ -122,7 +122,8 @@ namespace CKCNNET.Controllers
                 if (user == null)
                     return NotFound();
 
-                if (user.IsSellerApproved)
+                // Kiểm tra xem đã là Seller chưa (Role.Name == "Seller")
+                if (user.Role?.Name == "Seller")
                 {
                     TempData["ErrorMessage"] = "Bạn đã là Seller rồi!";
                     return RedirectToAction("Profile");
@@ -190,7 +191,7 @@ namespace CKCNNET.Controllers
         [HttpPost]
         public async Task<IActionResult> EditProfile(string phoneNumber, string bankAccount, string bankAccountHolder)
         {
-            int? userId = null;  // ← Khai báo userId bên ngoài try
+            int? userId = null;
             try
             {
                 userId = HttpContext.Session.GetInt32("UserId");
@@ -205,7 +206,7 @@ namespace CKCNNET.Controllers
                     return NotFound();
 
                 // Kiểm tra quyền Admin hoặc Seller để cập nhật ngân hàng
-                bool isAdminOrSeller = user.Role?.Name == "Admin" || user.Role?.Name == "Seller" || user.IsSellerApproved;
+                bool isAdminOrSeller = user.Role?.Name == "Admin" || user.Role?.Name == "Seller";
 
                 // Cập nhật thông tin cá nhân (cho tất cả user)
                 if (!string.IsNullOrWhiteSpace(phoneNumber))

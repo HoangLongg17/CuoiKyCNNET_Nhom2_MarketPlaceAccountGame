@@ -27,8 +27,8 @@ namespace CKCNNET.Controllers
 
             var user = await _context.Users.FindAsync(userId.Value);
     
-            // Nếu là Seller nhưng chưa được duyệt, không cho phép tạo
-            if (user?.Role?.Name == "Seller" && !user.IsSellerApproved)
+            // Nếu là Seller, cho phép tạo
+            if (user?.RoleId != 2) // RoleId = 2 là Seller
             {
                 TempData["ErrorMessage"] = "Bạn không có quyền đăng bán account.";
                 return RedirectToAction("Index", "Home");

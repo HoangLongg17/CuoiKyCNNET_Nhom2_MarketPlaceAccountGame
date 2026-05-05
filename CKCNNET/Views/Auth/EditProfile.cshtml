@@ -41,7 +41,7 @@
                         </div>
 
                         <!-- Section Tài khoản ngân hàng (chỉ cho Admin/Seller) -->
-                        @if (Model.Role?.Name == "Admin" || Model.IsSellerApproved || Model.Role?.Name == "Seller")
+                        @if (Model.Role?.Name == "Admin" || Model.Role?.Name == "Seller")
                         {
                             <div class="mb-4">
                                 <div class="card bg-light border-info">
@@ -105,7 +105,7 @@
                 <strong><i class="bi bi-info-circle"></i> Lưu ý:</strong>
                 <ul class="mb-0 ms-2">
                     <li>Số điện thoại phải có 10-11 ký tự</li>
-                    @if (Model.Role?.Name == "Admin" || Model.IsSellerApproved || Model.Role?.Name == "Seller")
+                    @if (Model.Role?.Name == "Admin" || Model.Role?.Name == "Seller")
                     {
                         <li>Số tài khoản phải có 10-20 ký tự số</li>
                         <li>Tên chủ tài khoản phải khớp với thông tin ngân hàng thực tế</li>

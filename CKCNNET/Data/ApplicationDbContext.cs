@@ -54,7 +54,6 @@ namespace CKCNNET.Data
                     BankAccount = "1234567890",
                     BankAccountHolder = "Nguyen Van Admin",
                     RoleId = 3, // Admin role
-                    IsSellerApproved = true,
                     CreatedAt = DateTime.Now
                 }
             );
