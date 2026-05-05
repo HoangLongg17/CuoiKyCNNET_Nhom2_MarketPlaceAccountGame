@@ -3,16 +3,36 @@
   "WorkspaceRootPath": "D:\\CKCNNET\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\controllers\\gameaccountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\controllers\\gameaccountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\authorization\\roleauthorizationattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\authorization\\roleauthorizationattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\gameaccount\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\gameaccount\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\gameaccount\\mylistings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\gameaccount\\mylistings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\gameaccount\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\gameaccount\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\views\\home\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -25,10 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\authorization\\roleauthorizationattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\authorization\\roleauthorizationattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -97,6 +113,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|d:\\ckcnnet\\ckcnnet\\migrations\\20260505103457_updateseedadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE2D239B-F739-23DF-4288-350A41027663}|CKCNNET\\CKCNNET.csproj|solutionrelative:ckcnnet\\migrations\\20260505103457_updateseedadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -106,33 +126,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Search.cshtml",
-              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Search.cshtml",
-              "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\Search.cshtml",
-              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Search.cshtml",
-              "RelativeToolTip": "CKCNNET\\Views\\Home\\Search.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:57:54.689Z",
-              "EditorCaption": ""
+              "DocumentIndex": 28,
+              "Title": "20260505103457_UpdateSeedAdmin.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Migrations\\20260505103457_UpdateSeedAdmin.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Migrations\\20260505103457_UpdateSeedAdmin.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Migrations\\20260505103457_UpdateSeedAdmin.cs",
+              "RelativeToolTip": "CKCNNET\\Migrations\\20260505103457_UpdateSeedAdmin.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T10:34:57.883Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "GameDetails.cshtml",
-              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\GameDetails.cshtml",
-              "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\GameDetails.cshtml",
-              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\GameDetails.cshtml",
-              "RelativeToolTip": "CKCNNET\\Views\\Home\\GameDetails.cshtml",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAAAIcAAABPAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADUAAAAAAAAAAAAvwIwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:57:23.152Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:14:41.892Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RoleAuthorizationAttribute.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
+              "RelativeToolTip": "CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAnwBsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T09:14:02.09Z"
             },
             {
               "$type": "Document",
@@ -142,14 +172,74 @@
               "RelativeDocumentMoniker": "CKCNNET\\Data\\ApplicationDbContext.cs",
               "ToolTip": "D:\\CKCNNET\\CKCNNET\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "CKCNNET\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAADwvy4AAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAhwD8AAACDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:13:36.317Z",
+              "WhenOpened": "2026-05-05T09:13:36.317Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameAccountController.cs",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Controllers\\GameAccountController.cs",
+              "RelativeDocumentMoniker": "CKCNNET\\Controllers\\GameAccountController.cs",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Controllers\\GameAccountController.cs",
+              "RelativeToolTip": "CKCNNET\\Controllers\\GameAccountController.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAEwPwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T10:08:36.005Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "MyListings.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\GameAccount\\MyListings.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\GameAccount\\MyListings.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\GameAccount\\MyListings.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\GameAccount\\MyListings.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T10:08:58.392Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\GameAccount\\Edit.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\GameAccount\\Edit.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\GameAccount\\Edit.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\GameAccount\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFQAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T10:09:05.222Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\GameAccount\\Create.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\GameAccount\\Create.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\GameAccount\\Create.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\GameAccount\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T10:08:51.692Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GameDetails.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\GameDetails.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\GameDetails.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\GameDetails.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Home\\GameDetails.cshtml",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAAIcAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:57:23.152Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Controllers\\HomeController.cs",
@@ -157,25 +247,11 @@
               "RelativeToolTip": "CKCNNET\\Controllers\\HomeController.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAIAxwAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:14:11.899Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:14:11.899Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "CKCNNET\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "CKCNNET\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAADEAAAAAAAAAAADwv4cAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:14:41.892Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "Cart.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Cart.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Models\\Cart.cs",
@@ -183,12 +259,11 @@
               "RelativeToolTip": "CKCNNET\\Models\\Cart.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAhwA8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:13:27.203Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:13:27.203Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Controllers\\AuthController.cs",
@@ -196,12 +271,11 @@
               "RelativeToolTip": "CKCNNET\\Controllers\\AuthController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:14:07.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:14:07.054Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\Index.cshtml",
@@ -209,12 +283,23 @@
               "RelativeToolTip": "CKCNNET\\Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:14:21.525Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:14:21.525Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
+              "Title": "Search.cshtml",
+              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Search.cshtml",
+              "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\Search.cshtml",
+              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Search.cshtml",
+              "RelativeToolTip": "CKCNNET\\Views\\Home\\Search.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T09:57:54.689Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Models\\ErrorViewModel.cs",
@@ -222,25 +307,11 @@
               "RelativeToolTip": "CKCNNET\\Models\\ErrorViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:51:49.713Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:51:49.713Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "RoleAuthorizationAttribute.cs",
-              "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
-              "RelativeDocumentMoniker": "CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
-              "ToolTip": "D:\\CKCNNET\\CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
-              "RelativeToolTip": "CKCNNET\\Authorization\\RoleAuthorizationAttribute.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAYwBsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:14:02.09Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "GameAccount.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\GameAccount.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Models\\GameAccount.cs",
@@ -248,12 +319,11 @@
               "RelativeToolTip": "CKCNNET\\Models\\GameAccount.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAA6wBsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:13:17.322Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:13:17.322Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "Order.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Order.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Models\\Order.cs",
@@ -261,12 +331,11 @@
               "RelativeToolTip": "CKCNNET\\Models\\Order.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T02:29:31.762Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T02:29:31.762Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "Purchase.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Purchase.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Models\\Purchase.cs",
@@ -274,12 +343,11 @@
               "RelativeToolTip": "CKCNNET\\Models\\Purchase.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAuwBUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:13:31.597Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:13:31.597Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "Role.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Role.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Models\\Role.cs",
@@ -287,12 +355,11 @@
               "RelativeToolTip": "CKCNNET\\Models\\Role.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T02:31:11.775Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T02:31:11.775Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\User.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Models\\User.cs",
@@ -300,12 +367,11 @@
               "RelativeToolTip": "CKCNNET\\Models\\User.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAA5wBUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T02:23:27.891Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T02:23:27.891Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Program.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Program.cs",
@@ -313,12 +379,11 @@
               "RelativeToolTip": "CKCNNET\\Program.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAAABAAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:15:15.005Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:15:15.005Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "CKCNNET\\Views\\_ViewStart.cshtml",
@@ -326,12 +391,11 @@
               "RelativeToolTip": "CKCNNET\\Views\\_ViewStart.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:51:28.824Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:51:28.824Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "Game.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Models\\Game.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Models\\Game.cs",
@@ -339,12 +403,11 @@
               "RelativeToolTip": "CKCNNET\\Models\\Game.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:13:09.281Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:13:09.281Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "CKCNNET\\Views\\_ViewImports.cshtml",
@@ -352,12 +415,11 @@
               "RelativeToolTip": "CKCNNET\\Views\\_ViewImports.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:51:27.865Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:51:27.865Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "Privacy.cshtml",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Home\\Privacy.cshtml",
               "RelativeDocumentMoniker": "CKCNNET\\Views\\Home\\Privacy.cshtml",
@@ -365,12 +427,11 @@
               "RelativeToolTip": "CKCNNET\\Views\\Home\\Privacy.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:51:25.727Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:51:25.727Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "Login.cshtml",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Auth\\Login.cshtml",
               "RelativeDocumentMoniker": "CKCNNET\\Views\\Auth\\Login.cshtml",
@@ -378,12 +439,11 @@
               "RelativeToolTip": "CKCNNET\\Views\\Auth\\Login.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:14:36.687Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:14:36.687Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "Register.cshtml",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Views\\Auth\\Register.cshtml",
               "RelativeDocumentMoniker": "CKCNNET\\Views\\Auth\\Register.cshtml",
@@ -391,12 +451,11 @@
               "RelativeToolTip": "CKCNNET\\Views\\Auth\\Register.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T09:14:31.576Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:14:31.576Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\appsettings.json",
               "RelativeDocumentMoniker": "CKCNNET\\appsettings.json",
@@ -404,12 +463,11 @@
               "RelativeToolTip": "CKCNNET\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-05T09:15:28.433Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:15:28.433Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "AuthService.cs",
               "DocumentMoniker": "D:\\CKCNNET\\CKCNNET\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "CKCNNET\\Services\\AuthService.cs",
@@ -417,8 +475,7 @@
               "RelativeToolTip": "CKCNNET\\Services\\AuthService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T09:13:56.647Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-05T09:13:56.647Z"
             }
           ]
         }

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using CKCNNET.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CKCNNET.Data
 {
@@ -29,14 +31,36 @@ namespace CKCNNET.Data
                 .Property(p => p.Amount)
                 .HasColumnType("decimal(18,2)");
 
+            // Seed Roles
             modelBuilder.Entity<Role>().HasData(
                 new Role { Id = 1, Name = "User" },
                 new Role { Id = 2, Name = "Seller" },
                 new Role { Id = 3, Name = "Admin" }
             );
 
+            // Hash password cho Admin
+            string adminPassword = HashPassword("Admin@123");
+
+            // Seed Admin
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Username = "Admin",
+                    Email = "admin@gmail.com",
+                    PasswordHash = adminPassword,
+                    PhoneNumber = "0912345678",
+                    BankAccount = "1234567890",
+                    BankAccountHolder = "Nguyen Van Admin",
+                    RoleId = 3, // Admin role
+                    IsSellerApproved = true,
+                    CreatedAt = DateTime.Now
+                }
+            );
+
+            // Seed Games
             modelBuilder.Entity<Game>().HasData(
-                new Game { Id = 1, Name = "League of Legends", Description = "MOBA game - Đấu Trường Chân Lý - Summoner's Rift", ImageUrl = "/images/lol.jpg" },
+                new Game { Id = 1, Name = "League of Legends", Description = "MOBA game - Đấu Trường Chân Lý", ImageUrl = "/images/lol.jpg" },
                 new Game { Id = 2, Name = "Dota 2", Description = "MOBA game - Chiến Trường Quân Sư", ImageUrl = "/images/dota2.png" },
                 new Game { Id = 3, Name = "Counter-Strike 2", Description = "FPS game - Đấu súng chiến thuật", ImageUrl = "/images/cs2.png" },
                 new Game { Id = 4, Name = "Valorant", Description = "Tactical shooter - Bắn súng chiến thuật", ImageUrl = "/images/valorant.jpg" },
@@ -87,6 +111,16 @@ namespace CKCNNET.Data
                 .WithMany(ga => ga.Purchases)
                 .HasForeignKey(p => p.GameAccountId)
                 .OnDelete(DeleteBehavior.NoAction);
+        }
+
+        //method để hash password
+        private static string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hashedBytes);
+            }
         }
     }
 }

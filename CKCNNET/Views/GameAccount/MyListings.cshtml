@@ -1,0 +1,142 @@
+@model IEnumerable<GameAccount>
+
+@{
+    ViewData["Title"] = "Danh sách Account của tôi";
+}
+
+<div class="container-fluid bg-info text-white py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1>📋 Danh sách Account của tôi</h1>
+                <p class="mb-0">Quản lý các account đang bán</p>
+            </div>
+            <a href="@Url.Action("Create", "GameAccount")" class="btn btn-light btn-lg">
+                ➕ Đăng bán Account mới
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            ✅ @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            ❌ @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Game</th>
+                        <th>Mô tả</th>
+                        <th>Giá</th>
+                        <th>Trạng thái</th>
+                        <th>Tích sắc</th>
+                        <th>Ngày đăng</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var account in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@account.Game.Name</strong>
+                            </td>
+                            <td>
+                                <small>@(account.Description.Length > 40 ? account.Description.Substring(0, 40) + "..." : account.Description)</small>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">@account.Price.ToString("N0") VND</span>
+                            </td>
+                            <td>
+                                @if (account.IsSold)
+                                {
+                                    <span class="badge bg-secondary">Đã bán</span>
+                                }
+                                else if (!account.IsApproved)
+                                {
+                                    <span class="badge bg-warning">⏳ Chờ duyệt</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">✓ Đang bán</span>
+                                }
+                            </td>
+                            <td>
+                                @if (account.IsSold)
+                                {
+                                    <span class="badge bg-secondary">Bán rồi</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-primary">Còn</span>
+                                }
+                            </td>
+                            <td>
+                                <small>@account.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    @if (!account.IsSold)
+                                    {
+                                        <a href="@Url.Action("Edit", "GameAccount", new { id = account.Id })" 
+                                           class="btn btn-outline-primary">
+                                            ✏️ Sửa
+                                        </a>
+                                        <form method="post" action="@Url.Action("Delete", "GameAccount", new { id = account.Id })" 
+                                              style="display:inline;">
+                                            <button type="submit" class="btn btn-outline-danger" 
+                                                    onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                                                🗑️ Xóa
+                                            </button>
+                                        </form>
+                                    }
+                                    <a href="@Url.Action("GameDetails", "Home", new { gameId = account.GameId })" 
+                                       class="btn btn-outline-secondary">
+                                        👁️ Xem
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center py-5" role="alert">
+            <h5>📦 Chưa có account nào</h5>
+            <p class="mb-3">Bạn chưa đăng bán account nào cả. Hãy bắt đầu bằng cách đăng bán account đầu tiên!</p>
+            <a href="@Url.Action("Create", "GameAccount")" class="btn btn-primary btn-lg">
+                ➕ Đăng bán Account Ngay
+            </a>
+        </div>
+    }
+</div>
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .btn-group-sm .btn {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.5rem;
+    }
+</style>

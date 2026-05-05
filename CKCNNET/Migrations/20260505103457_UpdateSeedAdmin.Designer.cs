@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CKCNNET.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260505093826_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260505103457_UpdateSeedAdmin")]
+    partial class UpdateSeedAdmin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,30 +76,58 @@ namespace CKCNNET.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "MOBA game",
+                            Description = "MOBA game - Đấu Trường Chân Lý",
                             ImageUrl = "/images/lol.jpg",
                             Name = "League of Legends"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "MOBA game",
+                            Description = "MOBA game - Chiến Trường Quân Sư",
                             ImageUrl = "/images/dota2.png",
                             Name = "Dota 2"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "FPS game",
+                            Description = "FPS game - Đấu súng chiến thuật",
                             ImageUrl = "/images/cs2.png",
                             Name = "Counter-Strike 2"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Tactical shooter",
+                            Description = "Tactical shooter - Bắn súng chiến thuật",
                             ImageUrl = "/images/valorant.jpg",
                             Name = "Valorant"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Gacha RPG - Trò chơi nhập vai quay gacha",
+                            ImageUrl = "/images/fgo.jpg",
+                            Name = "FGO (Fate Grand Order)"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Gacha RPG - Nhập vai quay gacha chiến thuật",
+                            ImageUrl = "/images/reverse1999.jpg",
+                            Name = "Reverse: 1999"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "MMORPG - Trường Học Ninja",
+                            ImageUrl = "/images/ninja_school.jpg",
+                            Name = "Ninja School"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "MMORPG - Game nhập vai trực tuyến",
+                            ImageUrl = "/images/hiep_si_online.jpg",
+                            Name = "Hiệp Sĩ Online"
                         });
                 });
 
@@ -267,6 +295,21 @@ namespace CKCNNET.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BankAccount = "1234567890",
+                            BankAccountHolder = "Nguyen Van Admin",
+                            CreatedAt = new DateTime(2026, 5, 5, 17, 34, 57, 446, DateTimeKind.Local).AddTicks(4443),
+                            Email = "admin@gmail.com",
+                            IsSellerApproved = true,
+                            PasswordHash = "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=",
+                            PhoneNumber = "0912345678",
+                            RoleId = 3,
+                            Username = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("CKCNNET.Models.Cart", b =>

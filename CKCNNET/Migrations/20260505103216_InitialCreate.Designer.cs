@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CKCNNET.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260505095402_AddGame")]
-    partial class AddGame
+    [Migration("20260505103216_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,7 +76,7 @@ namespace CKCNNET.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "MOBA game - Đấu Trường Chân Lý - Summoner's Rift",
+                            Description = "MOBA game - Đấu Trường Chân Lý",
                             ImageUrl = "/images/lol.jpg",
                             Name = "League of Legends"
                         },
@@ -84,14 +84,14 @@ namespace CKCNNET.Migrations
                         {
                             Id = 2,
                             Description = "MOBA game - Chiến Trường Quân Sư",
-                            ImageUrl = "/images/dota2.png",
+                            ImageUrl = "/images/dota2.jpg",
                             Name = "Dota 2"
                         },
                         new
                         {
                             Id = 3,
                             Description = "FPS game - Đấu súng chiến thuật",
-                            ImageUrl = "/images/cs2.png",
+                            ImageUrl = "/images/cs2.jpg",
                             Name = "Counter-Strike 2"
                         },
                         new
@@ -295,6 +295,21 @@ namespace CKCNNET.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BankAccount = "1234567890",
+                            BankAccountHolder = "Nguyen Van Admin",
+                            CreatedAt = new DateTime(2026, 5, 5, 17, 32, 16, 506, DateTimeKind.Local).AddTicks(5680),
+                            Email = "admin@gameaccount.com",
+                            IsSellerApproved = true,
+                            PasswordHash = "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=",
+                            PhoneNumber = "0912345678",
+                            RoleId = 3,
+                            Username = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("CKCNNET.Models.Cart", b =>

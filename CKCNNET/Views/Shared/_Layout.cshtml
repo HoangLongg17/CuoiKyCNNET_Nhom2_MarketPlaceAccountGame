@@ -66,7 +66,12 @@
                              Context.Session.GetString("UserRole") == "Admin")
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="#">📤 Đăng bán</a>
+                                <a class="nav-link" href="@Url.Action("MyListings", "GameAccount")">📋 Account của tôi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-success btn-sm text-white ms-2" href="@Url.Action("Create", "GameAccount")">
+                                    ➕ Đăng bán
+                                </a>
                             </li>
                         }
 

@@ -73,7 +73,7 @@ namespace CKCNNET.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "MOBA game - Đấu Trường Chân Lý - Summoner's Rift",
+                            Description = "MOBA game - Đấu Trường Chân Lý",
                             ImageUrl = "/images/lol.jpg",
                             Name = "League of Legends"
                         },
@@ -292,6 +292,21 @@ namespace CKCNNET.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BankAccount = "1234567890",
+                            BankAccountHolder = "Nguyen Van Admin",
+                            CreatedAt = new DateTime(2026, 5, 5, 17, 34, 57, 446, DateTimeKind.Local).AddTicks(4443),
+                            Email = "admin@gmail.com",
+                            IsSellerApproved = true,
+                            PasswordHash = "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=",
+                            PhoneNumber = "0912345678",
+                            RoleId = 3,
+                            Username = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("CKCNNET.Models.Cart", b =>

@@ -1,0 +1,165 @@
+@model GameAccount
+
+@{
+    ViewData["Title"] = "Đăng bán Account Game";
+}
+
+<div class="container-fluid bg-success text-white py-4">
+    <div class="container">
+        <h1>📤 Đăng bán Account Game</h1>
+        <p class="mb-0">Hãy cung cấp thông tin chi tiết về account của bạn</p>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            @foreach (var modelState in ViewData.ModelState.Values)
+                            {
+                                @foreach (var error in modelState.Errors)
+                                {
+                                    <p class="mb-0">❌ @error.ErrorMessage</p>
+                                }
+                            }
+                        </div>
+                    }
+
+                    <form method="post" class="needs-validation">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Chọn Game -->
+                        <div class="mb-4">
+                            <label for="gameId" class="form-label">
+                                <strong>🎮 Chọn Game</strong>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select form-select-lg" id="gameId" name="gameId" required>
+                                <option value="">-- Vui lòng chọn game --</option>
+                                @foreach (var game in ViewBag.Games)
+                                {
+                                    <option value="@game.Id">@game.Name</option>
+                                }
+                            </select>
+                            <small class="text-muted d-block mt-2">Chọn tựa game mà bạn muốn đăng bán account</small>
+                        </div>
+
+                        <!-- Mô tả -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label">
+                                <strong>📝 Mô tả Account</strong>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control form-control-lg" id="description" name="description" 
+                                      rows="4" placeholder="VD: Account level 100, đủ trang bị, có nhiều nhân vật mạnh..." required></textarea>
+                            <small class="text-muted d-block mt-2">Mô tả chi tiết sẽ giúp người mua hiểu rõ hơn về account</small>
+                        </div>
+
+                        <!-- Giá -->
+                        <div class="mb-4">
+                            <label for="price" class="form-label">
+                                <strong>💰 Giá bán (VND)</strong>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group input-group-lg">
+                                <input type="number" class="form-control" id="price" name="price" 
+                                       min="1000" step="1000" placeholder="100000" required>
+                                <span class="input-group-text">VND</span>
+                            </div>
+                            <small class="text-muted d-block mt-2">Giá tối thiểu: 1,000 VND</small>
+                        </div>
+
+                        <hr class="my-5">
+
+                        <!-- Thông tin đăng nhập (nếu có) -->
+                        <h5 class="mb-4">🔐 Thông tin Đăng nhập (Tùy chọn)</h5>
+
+                        <div class="mb-4">
+                            <label for="username" class="form-label">
+                                <strong>Tên tài khoản</strong>
+                            </label>
+                            <input type="text" class="form-control form-control-lg" id="username" name="username" 
+                                   placeholder="VD: player123 (để trống nếu không có)">
+                            <small class="text-muted d-block mt-2">
+                                ⚠️ Thông tin này sẽ được ẩn đến khi người mua thanh toán
+                            </small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label">
+                                <strong>Mật khẩu</strong>
+                            </label>
+                            <input type="password" class="form-control form-control-lg" id="password" name="password" 
+                                   placeholder="Nhập mật khẩu tài khoản (để trống nếu không có)">
+                            <small class="text-muted d-block mt-2">
+                                ⚠️ Mật khẩu sẽ được bảo mật và chỉ hiển thị sau khi thanh toán
+                            </small>
+                        </div>
+
+                        <hr class="my-5">
+
+                        <!-- Thông tin liên hệ -->
+                        <h5 class="mb-4">📞 Thông tin Liên hệ Người bán</h5>
+
+                        <div class="mb-4">
+                            <label for="contactInfo" class="form-label">
+                                <strong>Liên hệ (Facebook, Zalo, Email, v.v)</strong>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control form-control-lg" id="contactInfo" name="contactInfo" 
+                                   placeholder="VD: Facebook: fb.com/user123 | Zalo: 0912345678" required>
+                            <small class="text-muted d-block mt-2">
+                                Thông tin này sẽ được hiển thị cho người mua để liên hệ
+                            </small>
+                        </div>
+
+                        <!-- Thông báo chờ duyệt -->
+                        <div class="alert alert-info" role="alert">
+                            <h6 class="alert-heading">⏳ Chờ Admin Duyệt</h6>
+                            <p class="mb-0">Account của bạn sẽ chờ Admin duyệt trước khi hiển thị trên marketplace. 
+                            Điều này giúp đảm bảo chất lượng và an toàn cho cả người mua và bán.</p>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2 mt-5">
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-secondary btn-lg flex-grow-1">
+                                ← Quay lại
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg flex-grow-1">
+                                📤 Đăng bán ngay
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control-lg, .form-select-lg {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .card {
+        border: none;
+        border-radius: 1rem;
+    }
+
+    .btn-lg {
+        padding: 0.75rem 2rem;
+        font-size: 1.05rem;
+        border-radius: 0.5rem;
+    }
+</style>

@@ -150,3 +150,4 @@ D:\CKCNNET\CKCNNET\obj\Debug\net8.0\refint\CKCNNET.dll
 D:\CKCNNET\CKCNNET\obj\Debug\net8.0\CKCNNET.pdb
 D:\CKCNNET\CKCNNET\obj\Debug\net8.0\CKCNNET.genruntimeconfig.cache
 D:\CKCNNET\CKCNNET\obj\Debug\net8.0\ref\CKCNNET.dll
+D:\CKCNNET\CKCNNET\obj\Debug\net8.0\CKCNNET.sourcelink.json

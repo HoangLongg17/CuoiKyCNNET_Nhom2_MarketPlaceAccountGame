@@ -21,7 +21,7 @@ namespace CKCNNET.Authorization
 
             if (string.IsNullOrEmpty(userRole) || !_roles.Contains(userRole))
             {
-                context.Result = new UnauthorizedResult();
+                context.Result = new RedirectToActionResult("Login", "Auth", null);
             }
         }
     }

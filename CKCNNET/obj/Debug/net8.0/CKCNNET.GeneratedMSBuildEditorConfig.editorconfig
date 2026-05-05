@@ -30,6 +30,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/CKCNNET/CKCNNET/Views/GameAccount/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZUFjY291bnRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CKCNNET/CKCNNET/Views/GameAccount/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZUFjY291bnRcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CKCNNET/CKCNNET/Views/GameAccount/MyListings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZUFjY291bnRcTXlMaXN0aW5ncy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/CKCNNET/CKCNNET/Views/Home/GameDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHYW1lRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

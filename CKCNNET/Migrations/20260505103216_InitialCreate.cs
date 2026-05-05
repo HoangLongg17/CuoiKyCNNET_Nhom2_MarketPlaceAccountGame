@@ -163,10 +163,14 @@ namespace CKCNNET.Migrations
                 columns: new[] { "Id", "Description", "ImageUrl", "Name" },
                 values: new object[,]
                 {
-                    { 1, "MOBA game", "/images/lol.jpg", "League of Legends" },
-                    { 2, "MOBA game", "/images/dota2.png", "Dota 2" },
-                    { 3, "FPS game", "/images/cs2.png", "Counter-Strike 2" },
-                    { 4, "Tactical shooter", "/images/valorant.jpg", "Valorant" }
+                    { 1, "MOBA game - Đấu Trường Chân Lý", "/images/lol.jpg", "League of Legends" },
+                    { 2, "MOBA game - Chiến Trường Quân Sư", "/images/dota2.jpg", "Dota 2" },
+                    { 3, "FPS game - Đấu súng chiến thuật", "/images/cs2.jpg", "Counter-Strike 2" },
+                    { 4, "Tactical shooter - Bắn súng chiến thuật", "/images/valorant.jpg", "Valorant" },
+                    { 5, "Gacha RPG - Trò chơi nhập vai quay gacha", "/images/fgo.jpg", "FGO (Fate Grand Order)" },
+                    { 6, "Gacha RPG - Nhập vai quay gacha chiến thuật", "/images/reverse1999.jpg", "Reverse: 1999" },
+                    { 7, "MMORPG - Trường Học Ninja", "/images/ninja_school.jpg", "Ninja School" },
+                    { 8, "MMORPG - Game nhập vai trực tuyến", "/images/hiep_si_online.jpg", "Hiệp Sĩ Online" }
                 });
 
             migrationBuilder.InsertData(
@@ -178,6 +182,11 @@ namespace CKCNNET.Migrations
                     { 2, "Seller" },
                     { 3, "Admin" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "BankAccount", "BankAccountHolder", "CreatedAt", "Email", "IsSellerApproved", "PasswordHash", "PhoneNumber", "RoleId", "UpdatedAt", "Username" },
+                values: new object[] { 1, "1234567890", "Nguyen Van Admin", new DateTime(2026, 5, 5, 17, 32, 16, 506, DateTimeKind.Local).AddTicks(5680), "admin@gameaccount.com", true, "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=", "0912345678", 3, null, "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_GameAccountId",
