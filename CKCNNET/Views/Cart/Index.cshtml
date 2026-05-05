@@ -1,0 +1,137 @@
+﻿@model IEnumerable<Cart>
+
+@{
+    ViewData["Title"] = "Giỏ hàng của tôi";
+    ViewData["ShowGlobalAlerts"] = false;
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">🛒 Giỏ hàng</h2>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["WarningMessage"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["WarningMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["InfoMessage"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["InfoMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (Model.Any())
+    {
+        // Tổng chỉ tính các account vẫn còn (không tính các account đã bị bán)
+        decimal total = Model.Where(i => !(i.GameAccount?.IsSold ?? false)).Sum(i => i.GameAccount?.Price ?? 0);
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="list-group">
+                    @foreach (var item in Model)
+                    {
+                        bool isSold = item.GameAccount == null || item.GameAccount.IsSold;
+                        <div class="list-group-item mb-3 shadow-sm">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="mb-1">
+                                        @item.GameAccount?.Game?.Name - 
+                                        @if (isSold)
+                                        {
+                                            <span class="text-muted"><s>@((item.GameAccount?.Price ?? 0).ToString("N0")) VND</s></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-success">@((item.GameAccount?.Price ?? 0).ToString("N0")) VND</span>
+                                        }
+                                    </h5>
+
+                                    <p class="mb-1">@item.GameAccount?.Description</p>
+                                    <small class="text-muted">Người bán: <strong>@item.GameAccount?.Seller?.Username</strong></small>
+
+                                    <div class="mt-2">
+                                        @if (!string.IsNullOrEmpty(item.GameAccount?.Username))
+                                        {
+                                            <span class="badge bg-warning text-dark">⚠️ Thông tin đăng nhập sẽ hiển thị sau khi thanh toán</span>
+                                        }
+                                        @if (isSold)
+                                        {
+                                            <div class="mt-2">
+                                                <span class="badge bg-danger">Account này đã được người khác mua</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <small class="d-block text-muted">Thêm lúc: @item.AddedAt.ToString("dd/MM/yyyy HH:mm")</small>
+
+                                    <form method="post" asp-action="Remove" class="d-inline mt-2">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bạn có chắc muốn xóa mục này khỏi giỏ hàng?');">
+                                            <i class="bi bi-trash"></i> Xóa
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Tổng đơn hàng</h5>
+                        <p class="card-text display-6 text-success">@total.ToString("N0") VND</p>
+
+                        <form method="post" asp-action="Checkout">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-success btn-lg w-100" onclick="return confirm('Xác nhận thanh toán toàn bộ giỏ hàng?');">
+                                💳 Thanh toán ngay
+                            </button>
+                        </form>
+
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary btn-sm w-100 mt-2">← Tiếp tục mua sắm</a>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h6>Ghi chú</h6>
+                        <ul class="mb-0 ms-3">
+                            <li>Thông tin đăng nhập (nếu có) sẽ hiển thị trong lịch sử mua sau khi thanh toán.</li>
+                            <li>Quá trình thanh toán giả lập: hệ thống đánh dấu account là đã bán và lưu Purchase.</li>
+                            <li>Nếu một hoặc nhiều account trong giỏ đã bị mua bởi người khác, bạn sẽ không thể thanh toán cho đến khi xóa các mục đó hoặc chủ động bỏ chúng khỏi giỏ.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <h5>Giỏ hàng trống</h5>
+            <p>Bạn chưa thêm account nào vào giỏ. <a href="@Url.Action("Index", "Home")">Quay lại trang chủ</a></p>
+        </div>
+    }
+</div>

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Danh sách Account của tôi";
+    ViewData["ShowGlobalAlerts"] = false;
 }
 
 <div class="container-fluid bg-info text-white py-4">
@@ -45,7 +46,7 @@
                         <th>Mô tả</th>
                         <th>Giá</th>
                         <th>Trạng thái</th>
-                        <th>Tích sắc</th>
+                        <th>Tình trạng</th>
                         <th>Ngày đăng</th>
                         <th>Hành động</th>
                     </tr>
@@ -106,13 +107,99 @@
                                             </button>
                                         </form>
                                     }
-                                    <a href="@Url.Action("GameDetails", "Home", new { gameId = account.GameId })" 
-                                       class="btn btn-outline-secondary">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#accountModal@(account.Id)">
                                         👁️ Xem
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
+
+                        <!-- Modal chi tiết cho từng account -->
+                        <div class="modal fade" id="accountModal@(account.Id)" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Chi tiết Account - @account.Game?.Name</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row mb-3">
+                                            <div class="col-md-4"><strong>Giá</strong></div>
+                                            <div class="col-md-8 text-success fw-bold">@account.Price.ToString("N0") VND</div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4"><strong>Mô tả</strong></div>
+                                            <div class="col-md-8">@account.Description</div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4"><strong>Người bán</strong></div>
+                                            <div class="col-md-8">@account.Seller?.Username (@account.Seller?.Email)</div>
+                                        </div>
+
+                                        @if (!string.IsNullOrEmpty(account.Username))
+                                        {
+                                            <div class="row mb-3">
+                                                <div class="col-md-4"><strong>Username</strong></div>
+                                                <div class="col-md-8">@account.Username</div>
+                                            </div>
+                                        }
+
+                                        @if (!string.IsNullOrEmpty(account.Password))
+                                        {
+                                            <div class="row mb-3">
+                                                <div class="col-md-4"><strong>Password</strong></div>
+                                                <div class="col-md-8">@account.Password</div>
+                                            </div>
+                                        }
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4"><strong>Thông tin liên hệ</strong></div>
+                                            <div class="col-md-8">@(!string.IsNullOrEmpty(account.ContactInfo) ? account.ContactInfo : "Không có")</div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4"><strong>Trạng thái</strong></div>
+                                            <div class="col-md-8">
+                                                @if (account.IsSold)
+                                                {
+                                                    <span class="badge bg-secondary">Đã bán</span>
+                                                }
+                                                else if (!account.IsApproved)
+                                                {
+                                                    <span class="badge bg-warning">⏳ Chờ duyệt</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-success">✓ Đang bán</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4"><strong>Ngày đăng</strong></div>
+                                            <div class="col-md-8">@account.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        @if (!account.IsSold)
+                                        {
+                                            <a href="@Url.Action("Edit", "GameAccount", new { id = account.Id })" class="btn btn-primary">
+                                                ✏️ Sửa
+                                            </a>
+                                            <form method="post" action="@Url.Action("Delete", "GameAccount", new { id = account.Id })" style="display:inline;">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Xác nhận xóa account này?');">
+                                                    🗑️ Xóa
+                                                </button>
+                                            </form>
+                                        }
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Modal -->
                     }
                 </tbody>
             </table>

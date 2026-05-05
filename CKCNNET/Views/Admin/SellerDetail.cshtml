@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Chi tiết Seller";
+    ViewData["ShowGlobalAlerts"] = false;
     var userRole = Context.Session.GetString("UserRole");
     var userId = Context.Session.GetInt32("UserId");
 }

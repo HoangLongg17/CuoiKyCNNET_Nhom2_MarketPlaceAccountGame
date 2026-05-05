@@ -60,9 +60,14 @@
                             </div>
 
                             <div class="d-flex gap-2">
-                                <button class="btn btn-primary flex-grow-1" onclick="addToCart(@account.Id)">
-                                    🛒 Thêm vào giỏ
-                                </button>
+                                <form method="post" action="@Url.Action("AddToCart", "Cart")" class="flex-grow-1">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="accountId" value="@account.Id" />
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        🛒 Thêm vào giỏ
+                                    </button>
+                                </form>
+
                                 <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#detailModal@(account.Id)">
                                     👁️ Chi tiết
                                 </button>
@@ -90,10 +95,14 @@
                                 <p><strong>Đăng lúc:</strong> @account.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
                             </div>
                             <div class="modal-footer">
+                                <form method="post" action="@Url.Action("AddToCart", "Cart")" class="me-auto">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="accountId" value="@account.Id" />
+                                    <button type="submit" class="btn btn-primary">
+                                        🛒 Thêm vào giỏ
+                                    </button>
+                                </form>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                <button type="button" class="btn btn-primary" onclick="addToCart(@account.Id)">
-                                    🛒 Thêm vào giỏ
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -130,9 +139,3 @@
         padding: 1rem;
     }
 </style>
-
-<script>
-    function addToCart(accountId) {
-        alert('Tính năng thêm vào giỏ sẽ được cập nhật sớm! ID: ' + accountId);
-    }
-</script>

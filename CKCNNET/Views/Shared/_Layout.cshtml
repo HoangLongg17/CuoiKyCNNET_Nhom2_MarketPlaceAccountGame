@@ -26,14 +26,14 @@
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("UserRole")))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="#">🛒 Giỏ hàng</a>
+                            <a class="nav-link" href="@Url.Action("Index", "Cart")">🛒 Giỏ hàng</a>
                         </li>
 
                         @if (Context.Session.GetString("UserRole") == "Seller" || 
                              Context.Session.GetString("UserRole") == "Admin")
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("MyListings", "GameAccount")">📋 Account của tôi</a>
+                                <a class="nav-link" href="@Url.Action("MyListings", "GameAccount")">📋 Danh sách Account</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link btn btn-success btn-sm text-white ms-2" href="@Url.Action("Create", "GameAccount")">
@@ -55,7 +55,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="@Url.Action("Profile", "Auth")">👤 Hồ sơ cá nhân</a></li>
-                                <li><a class="dropdown-item" href="#">📜 Lịch sử mua</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Purchases", "Cart")">📜 Lịch sử mua</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="@Url.Action("Logout", "Auth")">🚪 Đăng xuất</a></li>
                             </ul>
@@ -74,6 +74,46 @@
             </div>
         </div>
     </nav>
+
+    <!-- Hiển thị thông báo từ TempData (chỉ hiển thị nếu view không tắt bằng ViewData["ShowGlobalAlerts"] = false) -->
+    @{
+        var showAlertsObj = ViewData["ShowGlobalAlerts"];
+        var showAlerts = true;
+        if (showAlertsObj is bool b) { showAlerts = b; }
+    }
+    @if (showAlerts)
+    {
+        <div class="container mt-3">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["WarningMessage"] != null)
+            {
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    @TempData["WarningMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["InfoMessage"] != null)
+            {
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    @TempData["InfoMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+        </div>
+    }
 
     <main>
         @RenderBody()
