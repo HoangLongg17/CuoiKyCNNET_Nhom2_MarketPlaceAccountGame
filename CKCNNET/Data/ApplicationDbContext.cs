@@ -18,6 +18,7 @@ namespace CKCNNET.Data
         public DbSet<GameAccount> GameAccounts { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<SellerRequest> SellerRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

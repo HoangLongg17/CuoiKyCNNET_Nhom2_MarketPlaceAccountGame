@@ -1,0 +1,118 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Sửa Hồ sơ";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-7 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-pencil-square"></i> Sửa Hồ sơ - @Model.Username
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-circle"></i> @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    <form method="post">
+                        <!-- Section Thông tin cá nhân (cho tất cả) -->
+                        <div class="mb-4">
+                            <h5 class="card-title border-bottom pb-2">
+                                <i class="bi bi-person"></i> Thông tin cá nhân
+                            </h5>
+
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">
+                                    <i class="bi bi-telephone"></i> Số điện thoại
+                                </label>
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" 
+                                       placeholder="Nhập số điện thoại (10-11 ký tự)" 
+                                       value="@Model.PhoneNumber">
+                                <small class="form-text text-muted">Để trống nếu không muốn cập nhật</small>
+                            </div>
+                        </div>
+
+                        <!-- Section Tài khoản ngân hàng (chỉ cho Admin/Seller) -->
+                        @if (Model.Role?.Name == "Admin" || Model.IsSellerApproved || Model.Role?.Name == "Seller")
+                        {
+                            <div class="mb-4">
+                                <div class="card bg-light border-info">
+                                    <div class="card-body">
+                                        <h5 class="card-title border-bottom pb-2">
+                                            <i class="bi bi-bank"></i> Thông tin tài khoản ngân hàng
+                                        </h5>
+
+                                        <div class="mb-3">
+                                            <label for="bankAccount" class="form-label">
+                                                <i class="bi bi-credit-card"></i> Số tài khoản
+                                            </label>
+                                            <input type="text" class="form-control" id="bankAccount" name="bankAccount" 
+                                                   placeholder="Nhập số tài khoản (10-20 ký tự số)" 
+                                                   value="@Model.BankAccount">
+                                            <small class="form-text text-muted">
+                                                Để trống nếu không muốn cập nhật hoặc điền cả hai ô tài khoản ngân hàng
+                                            </small>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="bankAccountHolder" class="form-label">
+                                                <i class="bi bi-person-vcard"></i> Tên chủ tài khoản
+                                            </label>
+                                            <input type="text" class="form-control" id="bankAccountHolder" name="bankAccountHolder" 
+                                                   placeholder="Nhập tên chủ tài khoản" 
+                                                   value="@Model.BankAccountHolder">
+                                            <small class="form-text text-muted">
+                                                Phải khớp với thông tin ngân hàng của bạn
+                                            </small>
+                                        </div>
+
+                                        @if (!string.IsNullOrEmpty(Model.BankAccount) && !string.IsNullOrEmpty(Model.BankAccountHolder))
+                                        {
+                                            <div class="alert alert-info">
+                                                <strong>Thông tin hiện tại:</strong><br>
+                                                STK: @Model.BankAccount<br>
+                                                Chủ TK: @Model.BankAccountHolder
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <hr>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-grow-1">
+                                <i class="bi bi-check-circle"></i> Lưu Thay Đổi
+                            </button>
+                            <a href="@Url.Action("Profile")" class="btn btn-secondary flex-grow-1">
+                                <i class="bi bi-arrow-left"></i> Quay lại
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="alert alert-warning mt-4">
+                <strong><i class="bi bi-info-circle"></i> Lưu ý:</strong>
+                <ul class="mb-0 ms-2">
+                    <li>Số điện thoại phải có 10-11 ký tự</li>
+                    @if (Model.Role?.Name == "Admin" || Model.IsSellerApproved || Model.Role?.Name == "Seller")
+                    {
+                        <li>Số tài khoản phải có 10-20 ký tự số</li>
+                        <li>Tên chủ tài khoản phải khớp với thông tin ngân hàng thực tế</li>
+                        <li>Để trống nếu không muốn cập nhật tài khoản ngân hàng</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

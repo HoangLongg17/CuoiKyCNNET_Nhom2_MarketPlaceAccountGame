@@ -1,0 +1,136 @@
+@model User
+
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <!-- Hiển thị thông báo -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Hồ sơ cá nhân</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Tên đăng nhập</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <strong>@Model.Username</strong>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.Email
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Số điện thoại</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @(Model.PhoneNumber ?? "Chưa cập nhật")
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Vai trò</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.Role?.Name
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Trạng thái Seller</h6>
+                        </div>
+                        <div class="col-sm-8">
+                            @if (Model.IsSellerApproved)
+                            {
+                                <span class="badge bg-success">✓ Đã duyệt</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark">✗ Chưa đăng ký</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section đăng ký Seller -->
+            @if (!Model.IsSellerApproved)
+            {
+                <div class="card shadow-sm mt-4 border-info">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">💰 Muốn bán account game?</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Đăng ký trở thành <strong>Seller</strong> để có quyền đăng bán account game trên marketplace của chúng tôi.</p>
+                        
+                        <div class="mb-3">
+                            <h6>Lợi ích khi trở thành Seller:</h6>
+                            <ul class="list-unstyled ms-3">
+                                <li><i class="bi bi-check-circle text-success"></i> Đăng bán unlimited account game</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Tiếp cận hàng ngàn người mua</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Quản lý các account của bạn dễ dàng</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Nhận tiền từ việc bán account</li>
+                            </ul>
+                        </div>
+
+                        <form method="post" action="@Url.Action("RegisterAsSeller", "Auth")">
+                            <button type="submit" class="btn btn-info btn-lg">
+                                <i class="bi bi-person-plus"></i> Đăng ký làm Seller
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow-sm mt-4 border-success">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">🎮 Quản lý account game</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Bạn đã là Seller. Bạn có thể bắt đầu đăng bán account game.</p>
+                        <a href="@Url.Action("Create", "GameAccount")" class="btn btn-success btn-lg">
+                            <i class="bi bi-plus-circle"></i> Đăng bán account mới
+                        </a>
+                        <a href="@Url.Action("MyListings", "GameAccount")" class="btn btn-outline-success btn-lg ms-2">
+                            <i class="bi bi-list"></i> Xem các account của tôi
+                        </a>
+                    </div>
+                </div>
+            }
+
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">← Quay lại Trang chủ</a>
+            </div>
+        </div>
+    </div>
+</div>

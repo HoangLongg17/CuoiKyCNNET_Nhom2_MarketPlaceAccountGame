@@ -2,7 +2,11 @@ wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\images\cs2.png
 wwwroot\images\dota2.png
+wwwroot\images\fgo.jpg
+wwwroot\images\hiep_si_online.jpg
 wwwroot\images\lol.jpg
+wwwroot\images\ninja_school.jpg
+wwwroot\images\reverse1999.jpg
 wwwroot\images\valorant.jpg
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
@@ -62,7 +66,3 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\images\fgo.jpg
-wwwroot\images\hiep_si_online.jpg
-wwwroot\images\reverse1999.jpg
-wwwroot\images\ninja_school.jpg

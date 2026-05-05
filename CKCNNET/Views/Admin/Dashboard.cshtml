@@ -1,0 +1,76 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container-fluid mt-4">
+    <h1 class="mb-4">⚙️ Admin Dashboard</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-warning text-dark shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Yêu cầu Seller chờ duyệt</h5>
+                    <h2 class="mb-0">@ViewBag.PendingSellerRequests</h2>
+                </div>
+                <a href="@Url.Action("SellerRequests", "Admin", new { status = "pending" })" 
+                   class="card-footer bg-transparent text-dark text-decoration-none">
+                    Xem chi tiết →
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-danger text-white shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Account chờ duyệt</h5>
+                    <h2 class="mb-0">@ViewBag.PendingGameAccounts</h2>
+                </div>
+                <a href="@Url.Action("PendingGameAccounts", "Admin")" 
+                   class="card-footer bg-transparent text-white text-decoration-none">
+                    Xem chi tiết →
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng Seller</h5>
+                    <h2 class="mb-0">@ViewBag.TotalSellers</h2>
+                </div>
+                <a href="@Url.Action("SellerManagement", "Admin")" 
+                   class="card-footer bg-transparent text-white text-decoration-none">
+                    Xem chi tiết →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Quản lý</h5>
+        </div>
+        <div class="card-body">
+            <a href="@Url.Action("SellerRequests", "Admin")" class="btn btn-warning mb-2 me-2">
+                👤 Duyệt yêu cầu Seller
+            </a>
+            <a href="@Url.Action("PendingGameAccounts", "Admin")" class="btn btn-danger mb-2 me-2">
+                🎮 Duyệt account game
+            </a>
+            <a href="@Url.Action("SellerManagement", "Admin")" class="btn btn-success mb-2">
+                💼 Quản lý Seller
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <a href="@Url.Action("AdminManagement")" class="btn btn-primary btn-lg w-100 mb-3">
+                <i class="bi bi-shield-lock"></i> Quản lý Admin
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="@Url.Action("ChangePassword")" class="btn btn-warning btn-lg w-100 mb-3">
+                <i class="bi bi-key"></i> Đổi Mật Khẩu
+            </a>
+        </div>
+    </div>
+</div>

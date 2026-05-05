@@ -1,0 +1,193 @@
+﻿@model List<CKCNNET.Models.User>
+
+@{
+    ViewData["Title"] = "Quản lý Admin";
+}
+
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>
+                <i class="bi bi-shield-lock"></i> Quản lý Admin
+            </h2>
+            <p class="text-muted">Danh sách tất cả Admin trong hệ thống</p>
+        </div>
+        <a href="@Url.Action("AddAdmin")" class="btn btn-success btn-lg">
+            <i class="bi bi-plus-circle"></i> Thêm Admin Mới
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["WarningMessage"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> @TempData["WarningMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">
+                <i class="bi bi-list-ul"></i> Danh Sách Admin (Tổng: @Model.Count)
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th width="5%">ID</th>
+                                <th width="15%">Username</th>
+                                <th width="20%">Email</th>
+                                <th width="15%">Số điện thoại</th>
+                                <th width="20%">Tài khoản ngân hàng</th>
+                                <th width="15%">Ngày tạo</th>
+                                <th width="15%">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var admin in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-primary">@admin.Id</span>
+                                    </td>
+                                    <td>
+                                        <strong>@admin.Username</strong>
+                                        @if (admin.Id == (int?)Context.Session.GetInt32("UserId"))
+                                        {
+                                            <span class="badge bg-info ms-2">
+                                                <i class="bi bi-star-fill"></i> Tài khoản của bạn
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <i class="bi bi-envelope"></i> @admin.Email
+                                    </td>
+                                    <td>
+                                        <i class="bi bi-telephone"></i> @(string.IsNullOrEmpty(admin.PhoneNumber) ? "Chưa cập nhật" : admin.PhoneNumber)
+                                    </td>
+                                    <td>
+                                        @if (string.IsNullOrEmpty(admin.BankAccount))
+                                        {
+                                            <span class="badge bg-secondary">Chưa cập nhật</span>
+                                        }
+                                        else
+                                        {
+                                            <small>
+                                                <strong>STK:</strong> @admin.BankAccount<br>
+                                                <strong>Chủ TK:</strong> @admin.BankAccountHolder
+                                            </small>
+                                        }
+                                    </td>
+                                    <td>
+                                        @admin.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="@Url.Action("EditAdminBankInfo", new { id = admin.Id })" 
+                                               class="btn btn-sm btn-info" title="Cập nhật thông tin ngân hàng">
+                                                <i class="bi bi-bank"></i> Ngân hàng
+                                            </a>
+                                            @if (admin.Id != (int?)Context.Session.GetInt32("UserId"))
+                                            {
+                                                <form method="post" action="@Url.Action("DeleteAdmin")" style="display:inline;" 
+                                                      onsubmit="return confirm('Bạn chắc chắn muốn xóa Admin: ' + '@admin.Username' + ' ?');">
+                                                    <input type="hidden" name="id" value="@admin.Id">
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        <i class="bi bi-trash"></i> Xóa
+                                                    </button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-sm btn-secondary" disabled>
+                                                    <i class="bi bi-lock"></i> Không thể xóa
+                                                </button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                    <p class="text-muted mt-3">Không có Admin nào trong hệ thống</p>
+                </div>
+            }
+        </div>
+        <div class="card-footer bg-light">
+            <small class="text-muted">
+                <i class="bi bi-info-circle"></i> 
+                Tổng số Admin: <strong>@Model.Count</strong>
+            </small>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-info-circle"></i> Về chúng tôi
+                    </h5>
+                    <p class="card-text">Sàn giao dịch account game uy tín và an toàn.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-telephone"></i> Liên hệ
+                    </h5>
+                    <p class="card-text">
+                        Email: info@gameaccount.com<br>
+                        Hotline: 0123 456 789
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-share"></i> Theo dõi chúng tôi
+                    </h5>
+                    <p class="card-text">
+                        <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4 pb-3 text-muted">
+        <small>© 2024 Game Account Store. All rights reserved.</small>
+    </div>
+</div>

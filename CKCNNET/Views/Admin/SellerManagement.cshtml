@@ -1,0 +1,69 @@
+@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "Quản lý Seller";
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-4">💼 Quản lý Seller</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Số Account</th>
+                    <th>Ngày tạo</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var seller in Model)
+                {
+                    <tr>
+                        <td>#@seller.Id</td>
+                        <td><strong>@seller.Username</strong></td>
+                        <td>@seller.Email</td>
+                        <td>@(seller.PhoneNumber ?? "Chưa cập nhật")</td>
+                        <td>
+                            <span class="badge bg-info">@seller.GameAccounts.Count account</span>
+                        </td>
+                        <td>@seller.CreatedAt.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a href="@Url.Action("SellerDetail", "Admin", new { id = seller.Id })" 
+                               class="btn btn-sm btn-info">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            <h5>Chưa có Seller nào</h5>
+        </div>
+    }
+
+    <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-outline-secondary mt-3">← Quay lại Dashboard</a>
+</div>

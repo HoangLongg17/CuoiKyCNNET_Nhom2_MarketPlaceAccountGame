@@ -25,6 +25,15 @@ namespace CKCNNET.Controllers
             if (!userId.HasValue)
                 return RedirectToAction("Login", "Auth");
 
+            var user = await _context.Users.FindAsync(userId.Value);
+    
+            // Nếu là Seller nhưng chưa được duyệt, không cho phép tạo
+            if (user?.Role?.Name == "Seller" && !user.IsSellerApproved)
+            {
+                TempData["ErrorMessage"] = "Bạn không có quyền đăng bán account.";
+                return RedirectToAction("Index", "Home");
+            }
+
             var games = await _context.Games.ToListAsync();
             ViewBag.Games = games;
             return View();

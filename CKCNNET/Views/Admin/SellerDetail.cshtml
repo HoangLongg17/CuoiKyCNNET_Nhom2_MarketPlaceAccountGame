@@ -1,0 +1,187 @@
+@model User
+
+@{
+    ViewData["Title"] = "Chi tiết Seller";
+    var userRole = Context.Session.GetString("UserRole");
+    var userId = Context.Session.GetInt32("UserId");
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="mb-4">💼 Chi tiết Seller - @Model.Username</h2>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["WarningMessage"] != null)
+            {
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    @TempData["WarningMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Thông tin Seller</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Username:</strong></div>
+                        <div class="col-sm-8">@Model.Username</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Email:</strong></div>
+                        <div class="col-sm-8">@Model.Email</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Số điện thoại:</strong></div>
+                        <div class="col-sm-8">@(Model.PhoneNumber ?? "Chưa cập nhật")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Chủ tài khoản:</strong></div>
+                        <div class="col-sm-8">@(Model.BankAccountHolder ?? "Chưa cập nhật")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Số tài khoản:</strong></div>
+                        <div class="col-sm-8">@(Model.BankAccount ?? "Chưa cập nhật")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Ngày tạo:</strong></div>
+                        <div class="col-sm-8">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Trạng thái:</strong></div>
+                        <div class="col-sm-8">
+                            <span class="badge bg-success fs-6">✓ Seller</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Account đã đăng (@Model.GameAccounts.Count)</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.GameAccounts.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Game</th>
+                                        <th>Giá</th>
+                                        <th>Trạng thái</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var account in Model.GameAccounts)
+                                    {
+                                        <tr>
+                                            <td>#@account.Id</td>
+                                            <td>@account.Game?.Name</td>
+                                            <td class="text-success fw-bold">@account.Price.ToString("N0") đ</td>
+                                            <td>
+                                                @if (account.IsSold)
+                                                {
+                                                    <span class="badge bg-secondary">Đã bán</span>
+                                                }
+                                                else if (account.IsApproved)
+                                                {
+                                                    <span class="badge bg-success">Đang bán</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning text-dark">Chờ duyệt</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (!account.IsSold)
+                                                {
+                                                    <form method="post" action="@Url.Action("DeleteSellerAccount", "Admin")" class="d-inline">
+                                                        <input type="hidden" name="sellerId" value="@Model.Id">
+                                                        <input type="hidden" name="accountId" value="@account.Id">
+                                                        <button type="submit" class="btn btn-sm btn-danger" 
+                                                                onclick="return confirm('Xóa account này?')">
+                                                            Xóa
+                                                        </button>
+                                                    </form>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Chưa có account nào.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Chỉ hiển thị nút phế chức nếu không phải tài khoản Admin -->
+            @if (!(Model.Id == userId && Model.Role?.Name == "Admin"))
+            {
+                <div class="card shadow border-danger">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">Hành động</h5>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var activeAccounts = Model.GameAccounts.Where(ga => !ga.IsSold).Count();
+                        }
+
+                        @if (activeAccounts > 0)
+                        {
+                            <div class="alert alert-warning mb-3">
+                                <strong>⚠️ Lưu ý:</strong> Seller này đang có <strong>@activeAccounts account</strong> đang đăng bán. 
+                                Bạn phải xóa tất cả các account này trước khi có thể phế chức.
+                            </div>
+                        }
+
+                        <form method="post" action="@Url.Action("RevokeSeller", "Admin")" class="d-inline">
+                            <input type="hidden" name="id" value="@Model.Id">
+                            <button type="submit" class="btn btn-danger btn-lg" 
+                                    onclick="return confirm('Bạn chắc chắn muốn phế chức Seller này?')"
+                                    @if (activeAccounts > 0) { <text>disabled</text> }>
+                                ⛔ Phế chức Seller về User
+                            </button>
+                        </form>
+
+                        @if (activeAccounts > 0)
+                        {
+                            <small class="text-muted d-block mt-2">Nút phế chức sẽ được kích hoạt khi tất cả account đã được xóa.</small>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info" role="alert">
+                    <strong>ℹ️ Thông tin:</strong> Đây là tài khoản Admin. Không thể phế chức tài khoản Admin.
+                </div>
+            }
+
+            <a href="@Url.Action("SellerManagement", "Admin")" class="btn btn-outline-secondary mt-3">← Quay lại</a>
+        </div>
+    </div>
+</div>

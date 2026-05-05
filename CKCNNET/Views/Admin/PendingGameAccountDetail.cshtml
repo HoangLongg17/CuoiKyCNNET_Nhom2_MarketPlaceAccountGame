@@ -1,0 +1,109 @@
+@model GameAccount
+
+@{
+    ViewData["Title"] = "Chi tiết Account Game";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="mb-4">🎮 Chi tiết Account Game - #@Model.Id</h2>
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Thông tin Game</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Game:</strong></div>
+                        <div class="col-sm-8">@Model.Game?.Name</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Seller:</strong></div>
+                        <div class="col-sm-8">@Model.Seller?.Username (@Model.Seller?.Email)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Chi tiết Account</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Giá:</strong></div>
+                        <div class="col-sm-8 text-success fw-bold">@Model.Price.ToString("N0") đ</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Mô tả:</strong></div>
+                        <div class="col-sm-8">
+                            <p>@Model.Description</p>
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.Username))
+                    {
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Username:</strong></div>
+                            <div class="col-sm-8">@Model.Username</div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Password))
+                    {
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Password:</strong></div>
+                            <div class="col-sm-8">@Model.Password</div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.ContactInfo))
+                    {
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Thông tin liên hệ:</strong></div>
+                            <div class="col-sm-8">@Model.ContactInfo</div>
+                        </div>
+                    }
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Ngày đăng:</strong></div>
+                        <div class="col-sm-8">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Quyết định</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form method="post" action="@Url.Action("ApproveGameAccount", "Admin")" class="mb-3">
+                                <input type="hidden" name="id" value="@Model.Id">
+                                <button type="submit" class="btn btn-success btn-lg w-100">
+                                    ✓ Duyệt Account
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form method="post" action="@Url.Action("RejectGameAccount", "Admin")">
+                                <input type="hidden" name="id" value="@Model.Id">
+                                <button type="submit" class="btn btn-danger btn-lg w-100" 
+                                        onclick="return confirm('Bạn chắc chắn muốn từ chối account này?')">
+                                    ✗ Từ chối Account
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="@Url.Action("PendingGameAccounts", "Admin")" class="btn btn-outline-secondary mt-3">← Quay lại</a>
+        </div>
+    </div>
+</div>

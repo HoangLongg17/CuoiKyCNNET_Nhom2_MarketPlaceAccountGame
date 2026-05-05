@@ -249,6 +249,55 @@ namespace CKCNNET.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CKCNNET.Models.SellerRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdminNotes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("BankAccount")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("BankAccountHolder")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReviewedByAdminId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReviewedByAdminId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SellerRequests");
+                });
+
             modelBuilder.Entity("CKCNNET.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -299,7 +348,7 @@ namespace CKCNNET.Migrations
                             Id = 1,
                             BankAccount = "1234567890",
                             BankAccountHolder = "Nguyen Van Admin",
-                            CreatedAt = new DateTime(2026, 5, 5, 17, 34, 57, 446, DateTimeKind.Local).AddTicks(4443),
+                            CreatedAt = new DateTime(2026, 5, 5, 18, 10, 41, 160, DateTimeKind.Local).AddTicks(6060),
                             Email = "admin@gmail.com",
                             IsSellerApproved = true,
                             PasswordHash = "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=",
@@ -364,6 +413,23 @@ namespace CKCNNET.Migrations
                     b.Navigation("Buyer");
 
                     b.Navigation("GameAccount");
+                });
+
+            modelBuilder.Entity("CKCNNET.Models.SellerRequest", b =>
+                {
+                    b.HasOne("CKCNNET.Models.User", "ReviewedByAdmin")
+                        .WithMany()
+                        .HasForeignKey("ReviewedByAdminId");
+
+                    b.HasOne("CKCNNET.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReviewedByAdmin");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CKCNNET.Models.User", b =>

@@ -1,0 +1,142 @@
+@model SellerRequest
+
+@{
+    ViewData["Title"] = "Chi tiết yêu cầu Seller";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="mb-4">📋 Chi tiết yêu cầu Seller - #@Model.Id</h2>
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Thông tin người dùng</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Username:</strong></div>
+                        <div class="col-sm-8">@Model.User?.Username</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Email:</strong></div>
+                        <div class="col-sm-8">@Model.User?.Email</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Số điện thoại:</strong></div>
+                        <div class="col-sm-8">@Model.User?.PhoneNumber</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Yêu cầu đăng ký</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Ngày gửi:</strong></div>
+                        <div class="col-sm-8">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Trạng thái:</strong></div>
+                        <div class="col-sm-8">
+                            @if (Model.Status == SellerRequest.RequestStatus.Pending)
+                            {
+                                <span class="badge bg-warning text-dark fs-6">⏳ Chờ duyệt</span>
+                            }
+                            else if (Model.Status == SellerRequest.RequestStatus.Approved)
+                            {
+                                <span class="badge bg-success fs-6">✓ Đã duyệt</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger fs-6">✗ Từ chối</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Lý do:</strong></div>
+                        <div class="col-sm-8">
+                            <p>@Model.Reason</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Chủ tài khoản:</strong></div>
+                        <div class="col-sm-8">@(Model.BankAccountHolder ?? "Chưa cấp nhật")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4"><strong>Số tài khoản:</strong></div>
+                        <div class="col-sm-8">@(Model.BankAccount ?? "Chưa cập nhật")</div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.Status != SellerRequest.RequestStatus.Pending)
+            {
+                <div class="card shadow mb-4 border-success">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Kết quả xử lý</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Duyệt bởi:</strong></div>
+                            <div class="col-sm-8">@Model.ReviewedByAdmin?.Username</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Ngày xử lý:</strong></div>
+                            <div class="col-sm-8">@Model.ReviewedAt?.ToString("dd/MM/yyyy HH:mm")</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Ghi chú:</strong></div>
+                            <div class="col-sm-8">@(Model.AdminNotes ?? "Không có ghi chú")</div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Quyết định</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="@Url.Action("ApprveSellerRequest", "Admin")">
+                            <input type="hidden" name="id" value="@Model.Id">
+                            <div class="mb-3">
+                                <label for="adminNotes" class="form-label">Ghi chú</label>
+                                <textarea class="form-control" id="adminNotes" name="adminNotes" rows="3" 
+                                    placeholder="Nhập ghi chú (không bắt buộc)..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg me-2">
+                                ✓ Duyệt yêu cầu
+                            </button>
+                        </form>
+
+                        <form method="post" action="@Url.Action("RejectSellerRequest", "Admin")" class="mt-3">
+                            <input type="hidden" name="id" value="@Model.Id">
+                            <div class="mb-3">
+                                <label for="rejectNotes" class="form-label">Lý do từ chối</label>
+                                <textarea class="form-control" id="rejectNotes" name="adminNotes" rows="3" 
+                                    placeholder="Nhập lý do từ chối..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                ✗ Từ chối yêu cầu
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+            <a href="@Url.Action("SellerRequests", "Admin")" class="btn btn-outline-secondary">← Quay lại</a>
+        </div>
+    </div>
+</div>

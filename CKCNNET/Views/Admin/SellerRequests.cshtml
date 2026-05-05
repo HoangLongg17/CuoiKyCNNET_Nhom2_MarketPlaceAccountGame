@@ -1,0 +1,89 @@
+@model IEnumerable<SellerRequest>
+
+@{
+    ViewData["Title"] = "Duyệt yêu cầu Seller";
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-4">📋 Duyệt yêu cầu đăng ký Seller</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <ul class="nav nav-tabs mb-3" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link @(ViewBag.CurrentStatus == "pending" ? "active" : "")" 
+               href="@Url.Action("SellerRequests", "Admin", new { status = "pending" })">
+                ⏳ Chờ duyệt
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(ViewBag.CurrentStatus == "approved" ? "active" : "")" 
+               href="@Url.Action("SellerRequests", "Admin", new { status = "approved" })">
+                ✓ Đã duyệt
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(ViewBag.CurrentStatus == "rejected" ? "active" : "")" 
+               href="@Url.Action("SellerRequests", "Admin", new { status = "rejected" })">
+                ✗ Từ chối
+            </a>
+        </li>
+    </ul>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Người dùng</th>
+                    <th>Email</th>
+                    <th>Lý do</th>
+                    <th>Ngày gửi</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td>#@request.Id</td>
+                        <td><strong>@request.User?.Username</strong></td>
+                        <td>@request.User?.Email</td>
+                        <td>@request.Reason?.Substring(0, Math.Min(50, request.Reason.Length))...</td>
+                        <td>@request.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            @if (request.Status == SellerRequest.RequestStatus.Pending)
+                            {
+                                <span class="badge bg-warning text-dark">⏳ Chờ duyệt</span>
+                            }
+                            else if (request.Status == SellerRequest.RequestStatus.Approved)
+                            {
+                                <span class="badge bg-success">✓ Đã duyệt</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">✗ Từ chối</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("SellerRequestDetail", "Admin", new { id = request.Id })" 
+                               class="btn btn-sm btn-info">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">Không có yêu cầu nào.</div>
+    }
+</div>

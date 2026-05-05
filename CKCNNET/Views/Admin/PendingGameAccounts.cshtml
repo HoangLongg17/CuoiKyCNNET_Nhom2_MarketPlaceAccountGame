@@ -1,0 +1,68 @@
+@model IEnumerable<GameAccount>
+
+@{
+    ViewData["Title"] = "Duyệt Account Game";
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-4">🎮 Duyệt Account Game Chờ Duyệt</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Game</th>
+                    <th>Seller</th>
+                    <th>Giá</th>
+                    <th>Mô tả</th>
+                    <th>Ngày gửi</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var account in Model)
+                {
+                    <tr>
+                        <td>#@account.Id</td>
+                        <td><strong>@account.Game?.Name</strong></td>
+                        <td>@account.Seller?.Username</td>
+                        <td class="text-success fw-bold">@account.Price.ToString("N0") đ</td>
+                        <td>@account.Description?.Substring(0, Math.Min(40, account.Description.Length))...</td>
+                        <td>@account.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <a href="@Url.Action("PendingGameAccountDetail", "Admin", new { id = account.Id })" 
+                               class="btn btn-sm btn-info">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            <h5>✓ Không có account nào chờ duyệt</h5>
+            <p>Tất cả account đã được duyệt hoặc bị từ chối.</p>
+        </div>
+    }
+
+    <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-outline-secondary mt-3">← Quay lại Dashboard</a>
+</div>

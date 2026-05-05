@@ -1,0 +1,213 @@
+@model User
+
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <!-- Hiển thị thông báo -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle"></i> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-circle"></i> @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- Card thông tin hồ sơ -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">👤 Hồ sơ cá nhân</h4>
+                    <div class="btn-group" role="group">
+                        <a href="@Url.Action("EditProfile")" class="btn btn-light btn-sm">
+                            <i class="bi bi-pencil"></i> Sửa hồ sơ
+                        </a>
+                        @if (Model.Role?.Name != "Admin")
+                        {
+                            <a href="@Url.Action("ChangePassword")" class="btn btn-light btn-sm">
+                                <i class="bi bi-key"></i> Đổi mật khẩu
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Tên đăng nhập</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <strong>@Model.Username</strong>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.Email
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Số điện thoại</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @(Model.PhoneNumber ?? "Chưa cập nhật")
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Vai trò</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <span class="badge bg-primary">@Model.Role?.Name</span>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- Hiển thị thông tin ngân hàng cho Admin/Seller -->
+                    @if (Model.Role?.Name == "Admin" || Model.IsSellerApproved || Model.Role?.Name == "Seller")
+                    {
+                        <div class="row mb-3">
+                            <div class="col-sm-4">
+                                <h6 class="mb-0">
+                                    <i class="bi bi-bank"></i> Tài khoản ngân hàng
+                                </h6>
+                            </div>
+                            <div class="col-sm-8">
+                                @if (!string.IsNullOrEmpty(Model.BankAccount) && !string.IsNullOrEmpty(Model.BankAccountHolder))
+                                {
+                                    <div>
+                                        <strong>STK:</strong> @Model.BankAccount<br>
+                                        <strong>Chủ TK:</strong> @Model.BankAccountHolder
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Chưa cập nhật</span>
+                                }
+                            </div>
+                        </div>
+                        <hr>
+                    }
+
+                    <!-- Chỉ hiển thị trạng thái Seller nếu không phải Admin -->
+                    @if (Model.Role?.Name != "Admin")
+                    {
+                        <div class="row mb-3">
+                            <div class="col-sm-4">
+                                <h6 class="mb-0">Trạng thái Seller</h6>
+                            </div>
+                            <div class="col-sm-8">
+                                @if (Model.IsSellerApproved)
+                                {
+                                    <span class="badge bg-success">✓ Đã duyệt</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">✗ Chưa đăng ký</span>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Ngày tạo</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section đăng ký Seller - Chỉ hiển thị nếu không phải Admin -->
+            @if (Model.Role?.Name != "Admin")
+            {
+                @if (!Model.IsSellerApproved)
+                {
+                    <div class="card shadow-sm border-info">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">💰 Muốn bán account game?</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="lead">Đăng ký trở thành <strong>Seller</strong> để có quyền đăng bán account game trên marketplace của chúng tôi.</p>
+                            
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-3">✨ Lợi ích khi trở thành Seller:</h6>
+                                <ul class="list-unstyled ms-3">
+                                    <li>✓ Đăng bán unlimited account game</li>
+                                    <li>✓ Tiếp cận hàng ngàn người mua</li>
+                                    <li>✓ Quản lý các account của bạn dễ dàng</li>
+                                    <li>✓ Nhận tiền từ việc bán account</li>
+                                </ul>
+                            </div>
+
+                            <form method="post" action="@Url.Action("RegisterAsSeller", "Auth")">
+                                <div class="mb-3">
+                                    <label for="reason" class="form-label">Lý do muốn làm Seller <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="reason" name="reason" rows="3" 
+                                        placeholder="Hãy cho chúng tôi biết lý do bạn muốn trở thành Seller..." required></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="bankAccountHolder" class="form-label">Chủ tài khoản ngân hàng</label>
+                                    <input type="text" class="form-control" id="bankAccountHolder" name="bankAccountHolder" 
+                                        placeholder="Nhập tên chủ tài khoản...">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="bankAccount" class="form-label">Số tài khoản ngân hàng</label>
+                                    <input type="text" class="form-control" id="bankAccount" name="bankAccount" 
+                                        placeholder="Nhập số tài khoản...">
+                                </div>
+
+                                <button type="submit" class="btn btn-info btn-lg w-100">
+                                    <i class="bi bi-person-plus"></i> Gửi yêu cầu đăng ký Seller
+                                </button>
+                                <small class="text-muted d-block mt-2">
+                                    Admin sẽ kiểm tra và phê duyệt yêu cầu của bạn trong vòng 24 giờ.
+                                </small>
+                            </form>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="card shadow-sm border-success">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">🎮 Quản lý account game</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Bạn đã được duyệt làm Seller. Bạn có thể đăng bán account game.</p>
+                            <a href="@Url.Action("Create", "GameAccount")" class="btn btn-success btn-lg">
+                                <i class="bi bi-plus-circle"></i> Đăng bán account mới
+                            </a>
+                            <a href="@Url.Action("MyListings", "GameAccount")" class="btn btn-outline-success btn-lg ms-2">
+                                <i class="bi bi-list"></i> Xem các account của tôi
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">← Quay lại Trang chủ</a>
+            </div>
+        </div>
+    </div>
+</div>
