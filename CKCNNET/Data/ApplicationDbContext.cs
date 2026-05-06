@@ -20,6 +20,9 @@ namespace CKCNNET.Data
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<SellerRequest> SellerRequests { get; set; }
 
+        // New DbSet
+        public DbSet<PaymentProof> PaymentProofs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -110,6 +113,19 @@ namespace CKCNNET.Data
                 .HasOne(p => p.GameAccount)
                 .WithMany(ga => ga.Purchases)
                 .HasForeignKey(p => p.GameAccountId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // PaymentProof relations
+            modelBuilder.Entity<PaymentProof>()
+                .HasOne(pp => pp.Buyer)
+                .WithMany(u => u.PaymentProofs)
+                .HasForeignKey(pp => pp.BuyerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PaymentProof>()
+                .HasOne(pp => pp.GameAccount)
+                .WithMany(ga => ga.PaymentProofs)
+                .HasForeignKey(pp => pp.GameAccountId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
 

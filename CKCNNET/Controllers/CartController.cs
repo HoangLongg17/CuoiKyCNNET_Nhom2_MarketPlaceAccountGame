@@ -5,16 +5,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CKCNNET.Data;
 using CKCNNET.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using CKCNNET.Authorization;
 
 namespace CKCNNET.Controllers
 {
+    [RoleAuthorization("User", "Seller", "Admin")]
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public CartController(ApplicationDbContext context)
+        public CartController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // Hiển thị giỏ hàng của người dùng hiện tại
@@ -120,7 +127,7 @@ namespace CKCNNET.Controllers
             return RedirectToAction("Index");
         }
 
-        // Thanh toán giỏ hàng: tạo Purchases, đánh dấu GameAccount.IsSold = true
+        // Thanh toán giỏ hàng: tạo Purchases (Pending), đánh dấu GameAccount.IsSold = true
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout()
@@ -162,19 +169,20 @@ namespace CKCNNET.Controllers
                         continue;
                     }
 
+                    // Create purchase in Pending state
                     var purchase = new Purchase
                     {
                         BuyerId = userId.Value,
                         GameAccountId = account.Id,
                         Amount = account.Price,
-                        Status = "Completed",
-                        PurchaseDate = DateTime.Now,
-                        CompletedDate = DateTime.Now,
-                        AccountUsername = account.Username,
-                        AccountPassword = account.Password
+                        Status = "Pending",
+                        PurchaseDate = DateTime.Now
+                        // AccountUsername/Password and CompletedDate left null until seller approves
                     };
 
+                    // Prevent others from buying while awaiting payment (reusing existing IsSold check)
                     account.IsSold = true;
+
                     _context.Purchases.Add(purchase);
                     _context.GameAccounts.Update(account);
 
@@ -185,7 +193,7 @@ namespace CKCNNET.Controllers
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                TempData["SuccessMessage"] = "Thanh toán thành công. Thông tin account đã được ghi vào lịch sử mua.";
+                TempData["SuccessMessage"] = "Yêu cầu mua đã tạo. Vui lòng tải ảnh minh chứng chuyển khoản trong lịch sử mua để Seller kiểm tra.";
             }
             catch (Exception ex)
             {
@@ -193,6 +201,197 @@ namespace CKCNNET.Controllers
                 TempData["ErrorMessage"] = "Lỗi khi thanh toán: " + ex.Message;
             }
 
+            return RedirectToAction("Purchases");
+        }
+
+        // Upload payment proof (buyer)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadProof(int purchaseId, IFormFile proofImage)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (!userId.HasValue)
+            {
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập.";
+                return RedirectToAction("Login", "Auth");
+            }
+
+            var purchase = await _context.Purchases
+                .Include(p => p.GameAccount)
+                .ThenInclude(ga => ga.Seller)
+                .FirstOrDefaultAsync(p => p.Id == purchaseId);
+
+            if (purchase == null || purchase.BuyerId != userId.Value)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy đơn hàng.";
+                return RedirectToAction("Purchases");
+            }
+
+            if (purchase.Status != "Pending")
+            {
+                TempData["WarningMessage"] = "Đơn hàng không ở trạng thái chờ thanh toán.";
+                return RedirectToAction("Purchases");
+            }
+
+            if (proofImage == null || proofImage.Length == 0)
+            {
+                TempData["ErrorMessage"] = "Vui lòng chọn ảnh minh chứng.";
+                return RedirectToAction("Purchases");
+            }
+
+            // Save file
+            var uploadsRoot = Path.Combine(_env.WebRootPath ?? "wwwroot", "uploads", "payments");
+            if (!Directory.Exists(uploadsRoot))
+            {
+                Directory.CreateDirectory(uploadsRoot);
+            }
+
+            var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(proofImage.FileName)}";
+            var filePath = Path.Combine(uploadsRoot, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await proofImage.CopyToAsync(stream);
+            }
+
+            var proof = new PaymentProof
+            {
+                BuyerId = userId.Value,
+                GameAccountId = purchase.GameAccountId,
+                FileName = uniqueFileName,
+                UploadedAt = DateTime.Now
+            };
+
+            // If a proof exists for same buyer/account, replace it (optional)
+            var existing = await _context.PaymentProofs
+                .FirstOrDefaultAsync(pp => pp.BuyerId == proof.BuyerId && pp.GameAccountId == proof.GameAccountId);
+
+            if (existing != null)
+            {
+                // delete old file if exists
+                try
+                {
+                    var oldPath = Path.Combine(uploadsRoot, existing.FileName ?? "");
+                    if (System.IO.File.Exists(oldPath))
+                    {
+                        System.IO.File.Delete(oldPath);
+                    }
+                }
+                catch { /* ignore */ }
+
+                existing.FileName = proof.FileName;
+                existing.UploadedAt = proof.UploadedAt;
+                _context.PaymentProofs.Update(existing);
+            }
+            else
+            {
+                _context.PaymentProofs.Add(proof);
+            }
+
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Ảnh minh chứng đã được tải lên. Vui lòng chờ Seller kiểm tra.";
+            return RedirectToAction("Purchases");
+        }
+
+        // Seller approves a pending purchase
+        [RoleAuthorization("Seller", "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApprovePurchase(int purchaseId)
+        {
+            var sellerId = HttpContext.Session.GetInt32("UserId");
+            if (!sellerId.HasValue)
+            {
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập.";
+                return RedirectToAction("Login", "Auth");
+            }
+
+            var purchase = await _context.Purchases
+                .Include(p => p.GameAccount)
+                .FirstOrDefaultAsync(p => p.Id == purchaseId);
+
+            if (purchase == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy đơn hàng.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (purchase.GameAccount == null || purchase.GameAccount.SellerId != sellerId.Value)
+            {
+                TempData["ErrorMessage"] = "Bạn không có quyền xử lý đơn này.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (purchase.Status != "Pending")
+            {
+                TempData["WarningMessage"] = "Đơn hàng không ở trạng thái chờ.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Mark completed and copy credentials to purchase
+            purchase.Status = "Completed";
+            purchase.CompletedDate = DateTime.Now;
+            purchase.AccountUsername = purchase.GameAccount.Username;
+            purchase.AccountPassword = purchase.GameAccount.Password;
+
+            _context.Purchases.Update(purchase);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Đã xác nhận thanh toán. Thông tin đăng nhập đã hiển thị trong lịch sử mua.";
+            return RedirectToAction("Purchases");
+        }
+
+        // Seller rejects a pending purchase
+        [RoleAuthorization("Seller", "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RejectPurchase(int purchaseId, string? reason)
+        {
+            var sellerId = HttpContext.Session.GetInt32("UserId");
+            if (!sellerId.HasValue)
+            {
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập.";
+                return RedirectToAction("Login", "Auth");
+            }
+
+            var purchase = await _context.Purchases
+                .Include(p => p.GameAccount)
+                .FirstOrDefaultAsync(p => p.Id == purchaseId);
+
+            if (purchase == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy đơn hàng.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (purchase.GameAccount == null || purchase.GameAccount.SellerId != sellerId.Value)
+            {
+                TempData["ErrorMessage"] = "Bạn không có quyền xử lý đơn này.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (purchase.Status != "Pending")
+            {
+                TempData["WarningMessage"] = "Đơn hàng không ở trạng thái chờ.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Reject: set reason, mark purchase rejected and reopen account for sale
+            purchase.Status = "Rejected";
+            purchase.RejectionReason = reason;
+            purchase.CompletedDate = DateTime.Now;
+
+            if (purchase.GameAccount != null)
+            {
+                purchase.GameAccount.IsSold = false; // make it available again
+                _context.GameAccounts.Update(purchase.GameAccount);
+            }
+
+            _context.Purchases.Update(purchase);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Đã từ chối đơn hàng và mở lại account để bán. Người mua sẽ thấy lý do từ chối.";
             return RedirectToAction("Purchases");
         }
 
@@ -215,6 +414,17 @@ namespace CKCNNET.Controllers
                 .Where(p => p.BuyerId == userId.Value)
                 .OrderByDescending(p => p.PurchaseDate)
                 .ToListAsync();
+
+            // Map any existing payment proof filenames for quick lookup
+            var proofMap = new System.Collections.Generic.Dictionary<int, string?>();
+            foreach (var p in purchases)
+            {
+                var proof = await _context.PaymentProofs
+                    .FirstOrDefaultAsync(pp => pp.BuyerId == p.BuyerId && pp.GameAccountId == p.GameAccountId);
+                proofMap[p.Id] = proof?.FileName;
+            }
+
+            ViewBag.PaymentProofs = proofMap;
 
             return View(purchases);
         }

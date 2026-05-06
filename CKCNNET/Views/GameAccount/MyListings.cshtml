@@ -65,21 +65,53 @@
                                 <span class="badge bg-success">@account.Price.ToString("N0") VND</span>
                             </td>
                             <td>
-                                @if (account.IsSold)
-                                {
-                                    <span class="badge bg-secondary">Đã bán</span>
+                                @* Đồng bộ: nếu có giao dịch gần nhất thì hiển thị trạng thái giao dịch đó, ngược lại fallback theo IsApproved/IsSold *@
+                                @{
+                                    var latestPurchase = account.Purchases?.OrderByDescending(p => p.PurchaseDate).FirstOrDefault();
                                 }
-                                else if (!account.IsApproved)
+
+                                @if (latestPurchase != null)
                                 {
-                                    <span class="badge bg-warning">⏳ Chờ duyệt</span>
+                                    if (latestPurchase.Status == "Pending")
+                                    {
+                                        <span class="badge bg-warning text-dark">⏳ Pending (@(latestPurchase.Buyer?.Username ?? "Buyer"))</span>
+                                    }
+                                    else if (latestPurchase.Status == "Completed")
+                                    {
+                                        <span class="badge bg-success">✓ Completed</span>
+                                    }
+                                    else if (latestPurchase.Status == "Rejected")
+                                    {
+                                        <span class="badge bg-danger">✗ Rejected</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">@latestPurchase.Status</span>
+                                    }
                                 }
                                 else
                                 {
-                                    <span class="badge bg-success">✓ Đang bán</span>
+                                    if (account.IsSold)
+                                    {
+                                        <span class="badge bg-secondary">Đã bán</span>
+                                    }
+                                    else if (!account.IsApproved)
+                                    {
+                                        <span class="badge bg-warning">⏳ Chờ duyệt</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">✓ Đang bán</span>
+                                    }
                                 }
                             </td>
                             <td>
-                                @if (account.IsSold)
+                                @* Tình trạng (availability) ưu tiên Pending để seller biết đang có đơn chờ, sau đó IsSold *@
+                                @if (account.Purchases?.Any(p => p.Status == "Pending") == true)
+                                {
+                                    <span class="badge bg-warning text-dark">Có đơn chờ</span>
+                                }
+                                else if (account.IsSold)
                                 {
                                     <span class="badge bg-secondary">Bán rồi</span>
                                 }
@@ -162,17 +194,33 @@
                                         <div class="row mb-3">
                                             <div class="col-md-4"><strong>Trạng thái</strong></div>
                                             <div class="col-md-8">
-                                                @if (account.IsSold)
+                                                @if (latestPurchase != null)
                                                 {
-                                                    <span class="badge bg-secondary">Đã bán</span>
-                                                }
-                                                else if (!account.IsApproved)
-                                                {
-                                                    <span class="badge bg-warning">⏳ Chờ duyệt</span>
+                                                    <div>
+                                                        <strong>Giao dịch gần nhất:</strong>
+                                                        <div>
+                                                            <span class="badge @(latestPurchase.Status == "Completed" ? "bg-success" : (latestPurchase.Status == "Rejected" ? "bg-danger" : "bg-warning text-dark"))">
+                                                                @latestPurchase.Status
+                                                            </span>
+                                                            <small class="text-muted ms-2">#@latestPurchase.Id — @latestPurchase.PurchaseDate.ToString("dd/MM/yyyy HH:mm")</small>
+                                                        </div>
+                                                        <div class="small text-muted">Người mua: @latestPurchase.Buyer?.Username (@latestPurchase.Buyer?.Email)</div>
+                                                    </div>
                                                 }
                                                 else
                                                 {
-                                                    <span class="badge bg-success">✓ Đang bán</span>
+                                                    @if (account.IsSold)
+                                                    {
+                                                        <span class="badge bg-secondary">Đã bán</span>
+                                                    }
+                                                    else if (!account.IsApproved)
+                                                    {
+                                                        <span class="badge bg-warning">⏳ Chờ duyệt</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-success">✓ Đang bán</span>
+                                                    }
                                                 }
                                             </div>
                                         </div>
@@ -181,6 +229,69 @@
                                             <div class="col-md-4"><strong>Ngày đăng</strong></div>
                                             <div class="col-md-8">@account.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
                                         </div>
+
+                                        @* Seller: show pending purchases & proofs here (Seller duyệt minh chứng ở đây) *@
+                                        @{
+                                            var currentUserId = Context.Session.GetInt32("UserId");
+                                            var pendingPurchases = account.Purchases?.Where(p => p.Status == "Pending").OrderByDescending(p => p.PurchaseDate).ToList() ?? new List<Purchase>();
+                                        }
+
+                                        @if (pendingPurchases.Any() && currentUserId == account.SellerId)
+                                        {
+                                            <hr />
+                                            <h6>📥 Đơn chờ kiểm tra</h6>
+
+                                            <div class="list-group">
+                                                @foreach (var p in pendingPurchases)
+                                                {
+                                                    var proof = account.PaymentProofs?.FirstOrDefault(pp => pp.BuyerId == p.BuyerId);
+                                                    <div class="list-group-item mb-2">
+                                                        <div class="d-flex justify-content-between align-items-start">
+                                                            <div>
+                                                                <div><strong>Người mua:</strong> @p.Buyer?.Username (@p.Buyer?.Email)</div>
+                                                                <div class="small text-muted">Mã #@p.Id — @p.PurchaseDate.ToString("dd/MM/yyyy HH:mm")</div>
+                                                            </div>
+                                                            <div class="text-end">
+                                                                @if (!string.IsNullOrEmpty(proof?.FileName))
+                                                                {
+                                                                    <a href="~/uploads/payments/@proof.FileName" target="_blank" class="btn btn-sm btn-outline-primary mb-2">🔎 Xem minh chứng</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="text-muted d-block mb-2">Chưa có minh chứng</span>
+                                                                }
+
+                                                                <div class="d-flex gap-2 justify-content-end">
+                                                                    <form method="post" action="@Url.Action("ApprovePurchase", "Cart")" class="d-inline">
+                                                                        @Html.AntiForgeryToken()
+                                                                        <input type="hidden" name="purchaseId" value="@p.Id" />
+                                                                        <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Xác nhận đồng ý và hoàn tất giao dịch cho đơn #@p.Id?');">✓ Đồng ý</button>
+                                                                    </form>
+
+                                                                    <button class="btn btn-danger btn-sm" data-bs-toggle="collapse" data-bs-target="#rejectBox@(account.Id)_@(p.Id)">✗ Từ chối</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="collapse mt-3" id="rejectBox@(account.Id)_@(p.Id)">
+                                                            <form method="post" action="@Url.Action("RejectPurchase", "Cart")">
+                                                                @Html.AntiForgeryToken()
+                                                                <input type="hidden" name="purchaseId" value="@p.Id" />
+                                                                <div class="mb-2">
+                                                                    <label class="form-label">Lý do từ chối (hiển thị cho người mua)</label>
+                                                                    <textarea name="reason" class="form-control" rows="3" required></textarea>
+                                                                </div>
+                                                                <button type="submit" class="btn btn-danger btn-sm">Gửi lý do & Từ chối</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                        else if (currentUserId == account.SellerId)
+                                        {
+                                            <div class="alert alert-secondary">Không có đơn chờ kiểm tra cho account này.</div>
+                                        }
                                     </div>
                                     <div class="modal-footer">
                                         @if (!account.IsSold)

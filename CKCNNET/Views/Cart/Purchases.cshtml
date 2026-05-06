@@ -36,7 +36,7 @@
                                 <div class="small text-muted">Người bán: @p.GameAccount?.Seller?.Username</div>
                             </div>
                             <div class="text-end">
-                                <span class="badge @(p.Status == "Completed" ? "bg-success" : "bg-secondary")">
+                                <span class="badge @(p.Status == "Completed" ? "bg-success" : (p.Status == "Rejected" ? "bg-danger" : "bg-warning text-dark"))">
                                     @p.Status
                                 </span>
                                 <div class="small text-muted">@p.PurchaseDate.ToString("dd/MM/yyyy HH:mm")</div>
@@ -105,6 +105,102 @@
                                     <div class="col-sm-8">@p.PurchaseDate.ToString("dd/MM/yyyy HH:mm")</div>
                                 </div>
 
+                                @* determine current user and role *@
+                                @{
+                                    var currentUserId = Context.Session.GetInt32("UserId");
+                                    var currentUserRole = Context.Session.GetString("UserRole");
+                                    var proofMap = ViewBag.PaymentProofs as System.Collections.Generic.Dictionary<int, string?>;
+                                    string? proofFile = null;
+                                    if (proofMap != null && proofMap.ContainsKey(p.Id))
+                                    {
+                                        proofFile = proofMap[p.Id];
+                                    }
+                                }
+
+                                @* Buyer view when Pending: show seller bank info and upload form *@
+                                @if (p.Status == "Pending")
+                                {
+                                    <div class="alert alert-info mt-3">
+                                        <strong>ℹ️ Quá trình thanh toán đang chờ Seller kiểm tra</strong>
+                                        <p class="mb-1">Nếu bạn đã chuyển khoản, vui lòng tải ảnh minh chứng để Seller kiểm tra.</p>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-sm-4"><strong>Ngân hàng người bán</strong></div>
+                                        <div class="col-sm-8">
+                                            <div><strong>Chủ tài khoản:</strong> @(p.GameAccount?.Seller?.BankAccountHolder ?? "Không có")</div>
+                                            <div><strong>Số tài khoản:</strong> @(p.GameAccount?.Seller?.BankAccount ?? "Không có")</div>
+                                        </div>
+                                    </div>
+
+                                    @if (currentUserId == p.BuyerId)
+                                    {
+                                        <form method="post" asp-action="UploadProof" enctype="multipart/form-data" class="mb-3">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="purchaseId" value="@p.Id" />
+                                            <div class="mb-2">
+                                                <label class="form-label">Tải ảnh minh chứng chuyển khoản</label>
+                                                <input type="file" name="proofImage" class="form-control" accept="image/*" required />
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">⬆️ Tải lên</button>
+                                        </form>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(proofFile))
+                                    {
+                                        <div class="mt-3">
+                                            <p><strong>Ảnh minh chứng đã gửi</strong></p>
+                                            <img src="~/uploads/payments/@proofFile" class="img-fluid border" alt="Proof" />
+                                        </div>
+                                    }
+                                }
+
+                                @* Seller view when Pending: show uploaded proof (if any) and actions Approve/Reject with comment *@
+                                @if (p.Status == "Pending" && p.GameAccount?.SellerId == currentUserId)
+                                {
+                                    <hr />
+                                    <h6>📥 Phiên chờ kiểm tra (bởi Seller)</h6>
+
+                                    @if (!string.IsNullOrEmpty(proofFile))
+                                    {
+                                        <div class="mb-3">
+                                            <p class="mb-1"><strong>Ảnh minh chứng người mua gửi</strong></p>
+                                            <img src="~/uploads/payments/@proofFile" class="img-fluid border" alt="Proof" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-secondary">Chưa có ảnh minh chứng nào được gửi.</div>
+                                    }
+
+                                    <div class="d-flex gap-2 mt-3">
+                                        <form method="post" asp-action="ApprovePurchase" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="purchaseId" value="@p.Id" />
+                                            <button type="submit" class="btn btn-success" onclick="return confirm('Xác nhận đồng ý và hoàn tất giao dịch?');">
+                                                ✓ Đồng ý
+                                            </button>
+                                        </form>
+
+                                        <button class="btn btn-danger" data-bs-toggle="collapse" data-bs-target="#rejectBox@(p.Id)">
+                                            ✗ Từ chối
+                                        </button>
+                                    </div>
+
+                                    <div class="collapse mt-3" id="rejectBox@(p.Id)">
+                                        <form method="post" asp-action="RejectPurchase">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="purchaseId" value="@p.Id" />
+                                            <div class="mb-2">
+                                                <label class="form-label">Lý do từ chối (hiển thị cho người mua)</label>
+                                                <textarea name="reason" class="form-control" rows="3" required></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-danger">Gửi lý do & Từ chối</button>
+                                        </form>
+                                    </div>
+                                }
+
+                                @* Completed view (buyer sees credentials) *@
                                 @if (p.Status == "Completed")
                                 {
                                     <div class="alert alert-warning mt-3">
@@ -113,10 +209,13 @@
                                         <p class="mb-0"><strong>Password:</strong> @(string.IsNullOrEmpty(p.AccountPassword) ? "Không có" : p.AccountPassword)</p>
                                     </div>
                                 }
-                                else
+
+                                @* Rejected view shows reason *@
+                                @if (p.Status == "Rejected")
                                 {
-                                    <div class="alert alert-info mt-3">
-                                        Thông tin đăng nhập sẽ được cập nhật khi đơn hoàn tất.
+                                    <div class="alert alert-danger mt-3">
+                                        <strong>✖️ Phiên mua đã bị hủy bởi người bán</strong>
+                                        <p class="mb-0">Lý do: @(string.IsNullOrEmpty(p.RejectionReason) ? "Không có" : p.RejectionReason)</p>
                                     </div>
                                 }
                             </div>

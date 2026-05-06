@@ -17,6 +17,7 @@ namespace CKCNNET.Controllers
         {
             _context = context;
         }
+
         [RoleAuthorization("Seller", "Admin")]
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -38,6 +39,7 @@ namespace CKCNNET.Controllers
             ViewBag.Games = games;
             return View();
         }
+
         [RoleAuthorization("Seller", "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -114,6 +116,7 @@ namespace CKCNNET.Controllers
                 return View(model);
             }
         }
+
         [RoleAuthorization("Seller", "Admin")]
         [HttpGet]
         public async Task<IActionResult> MyListings()
@@ -124,9 +127,14 @@ namespace CKCNNET.Controllers
 
             var userRole = HttpContext.Session.GetString("UserRole");
 
+            // Include Purchases (with Buyer) and PaymentProofs so seller can review proofs in MyListings view
             IQueryable<GameAccount> query = _context.GameAccounts
                 .Include(ga => ga.Game)
-                .Include(ga => ga.Seller);
+                .Include(ga => ga.Seller)
+                .Include(ga => ga.Purchases)
+                    .ThenInclude(p => p.Buyer)
+                .Include(ga => ga.PaymentProofs);
+
             if (userRole != "Admin")
             {
                 query = query.Where(ga => ga.SellerId == userId.Value);
@@ -138,6 +146,7 @@ namespace CKCNNET.Controllers
 
             return View(accounts);
         }
+
         [RoleAuthorization("Seller", "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)

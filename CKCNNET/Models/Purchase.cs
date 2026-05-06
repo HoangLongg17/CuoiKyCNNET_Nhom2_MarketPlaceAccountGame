@@ -18,5 +18,7 @@ namespace CKCNNET.Models
         
         public string? AccountUsername { get; set; }
         public string? AccountPassword { get; set; }
+
+        public string? RejectionReason { get; set; }
     }
 }

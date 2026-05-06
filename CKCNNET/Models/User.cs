@@ -22,5 +22,6 @@ namespace CKCNNET.Models
         public ICollection<GameAccount> GameAccounts { get; set; } = new List<GameAccount>();
         public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
         public ICollection<Cart> CartItems { get; set; } = new List<Cart>();
+        public ICollection<PaymentProof> PaymentProofs { get; set; } = new List<PaymentProof>();
     }
 }
