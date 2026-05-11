@@ -127,7 +127,7 @@ namespace CKCNNET.Controllers
             return RedirectToAction("Index");
         }
 
-        // Thanh toán giỏ hàng: tạo Purchases (Pending), đánh dấu GameAccount.IsSold = true
+        // Thanh toán giỏ hàng
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout()
@@ -165,11 +165,8 @@ namespace CKCNNET.Controllers
                     var account = await _context.GameAccounts.FindAsync(item.GameAccountId);
                     if (account == null || account.IsSold)
                     {
-                        // Should not happen because of pre-check, but keep safety
                         continue;
                     }
-
-                    // Create purchase in Pending state
                     var purchase = new Purchase
                     {
                         BuyerId = userId.Value,
@@ -177,15 +174,11 @@ namespace CKCNNET.Controllers
                         Amount = account.Price,
                         Status = "Pending",
                         PurchaseDate = DateTime.Now
-                        // AccountUsername/Password and CompletedDate left null until seller approves
                     };
-
-                    // Prevent others from buying while awaiting payment (reusing existing IsSold check)
                     account.IsSold = true;
 
                     _context.Purchases.Add(purchase);
                     _context.GameAccounts.Update(account);
-
                     // Xoá mục giỏ tương ứng
                     _context.Carts.Remove(item);
                 }
@@ -204,7 +197,6 @@ namespace CKCNNET.Controllers
             return RedirectToAction("Purchases");
         }
 
-        // Upload payment proof (buyer)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UploadProof(int purchaseId, IFormFile proofImage)
@@ -239,7 +231,6 @@ namespace CKCNNET.Controllers
                 return RedirectToAction("Purchases");
             }
 
-            // Save file
             var uploadsRoot = Path.Combine(_env.WebRootPath ?? "wwwroot", "uploads", "payments");
             if (!Directory.Exists(uploadsRoot))
             {
@@ -262,13 +253,11 @@ namespace CKCNNET.Controllers
                 UploadedAt = DateTime.Now
             };
 
-            // If a proof exists for same buyer/account, replace it (optional)
             var existing = await _context.PaymentProofs
                 .FirstOrDefaultAsync(pp => pp.BuyerId == proof.BuyerId && pp.GameAccountId == proof.GameAccountId);
 
             if (existing != null)
             {
-                // delete old file if exists
                 try
                 {
                     var oldPath = Path.Combine(uploadsRoot, existing.FileName ?? "");
@@ -277,7 +266,7 @@ namespace CKCNNET.Controllers
                         System.IO.File.Delete(oldPath);
                     }
                 }
-                catch { /* ignore */ }
+                catch { }
 
                 existing.FileName = proof.FileName;
                 existing.UploadedAt = proof.UploadedAt;
@@ -294,7 +283,6 @@ namespace CKCNNET.Controllers
             return RedirectToAction("Purchases");
         }
 
-        // Seller approves a pending purchase
         [RoleAuthorization("Seller", "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -329,7 +317,6 @@ namespace CKCNNET.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Mark completed and copy credentials to purchase
             purchase.Status = "Completed";
             purchase.CompletedDate = DateTime.Now;
             purchase.AccountUsername = purchase.GameAccount.Username;
@@ -342,7 +329,6 @@ namespace CKCNNET.Controllers
             return RedirectToAction("Purchases");
         }
 
-        // Seller rejects a pending purchase
         [RoleAuthorization("Seller", "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -377,14 +363,13 @@ namespace CKCNNET.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Reject: set reason, mark purchase rejected and reopen account for sale
             purchase.Status = "Rejected";
             purchase.RejectionReason = reason;
             purchase.CompletedDate = DateTime.Now;
 
             if (purchase.GameAccount != null)
             {
-                purchase.GameAccount.IsSold = false; // make it available again
+                purchase.GameAccount.IsSold = false;
                 _context.GameAccounts.Update(purchase.GameAccount);
             }
 
@@ -394,8 +379,6 @@ namespace CKCNNET.Controllers
             TempData["SuccessMessage"] = "Đã từ chối đơn hàng và mở lại account để bán. Người mua sẽ thấy lý do từ chối.";
             return RedirectToAction("Purchases");
         }
-
-        // Lịch sử mua của người dùng
         [HttpGet]
         public async Task<IActionResult> Purchases()
         {
@@ -414,8 +397,6 @@ namespace CKCNNET.Controllers
                 .Where(p => p.BuyerId == userId.Value)
                 .OrderByDescending(p => p.PurchaseDate)
                 .ToListAsync();
-
-            // Map any existing payment proof filenames for quick lookup
             var proofMap = new System.Collections.Generic.Dictionary<int, string?>();
             foreach (var p in purchases)
             {

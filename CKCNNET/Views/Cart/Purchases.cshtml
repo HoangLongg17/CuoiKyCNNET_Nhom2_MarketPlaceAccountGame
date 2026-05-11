@@ -105,7 +105,6 @@
                                     <div class="col-sm-8">@p.PurchaseDate.ToString("dd/MM/yyyy HH:mm")</div>
                                 </div>
 
-                                @* determine current user and role *@
                                 @{
                                     var currentUserId = Context.Session.GetInt32("UserId");
                                     var currentUserRole = Context.Session.GetString("UserRole");
@@ -117,7 +116,6 @@
                                     }
                                 }
 
-                                @* Buyer view when Pending: show seller bank info and upload form *@
                                 @if (p.Status == "Pending")
                                 {
                                     <div class="alert alert-info mt-3">
@@ -155,7 +153,6 @@
                                     }
                                 }
 
-                                @* Seller view when Pending: show uploaded proof (if any) and actions Approve/Reject with comment *@
                                 @if (p.Status == "Pending" && p.GameAccount?.SellerId == currentUserId)
                                 {
                                     <hr />
@@ -200,7 +197,6 @@
                                     </div>
                                 }
 
-                                @* Completed view (buyer sees credentials) *@
                                 @if (p.Status == "Completed")
                                 {
                                     <div class="alert alert-warning mt-3">
@@ -210,7 +206,6 @@
                                     </div>
                                 }
 
-                                @* Rejected view shows reason *@
                                 @if (p.Status == "Rejected")
                                 {
                                     <div class="alert alert-danger mt-3">
@@ -228,7 +223,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Modal -->
             }
         </div>
     }

@@ -14,19 +14,19 @@ namespace CKCNNET.Models
 
         [Required]
         [StringLength(500)]
-        public string? Reason { get; set; } // Lý do muốn làm seller
+        public string? Reason { get; set; }
 
         [StringLength(500)]
-        public string? BankAccount { get; set; } // Tài khoản ngân hàng
+        public string? BankAccount { get; set; }
 
         [StringLength(500)]
-        public string? BankAccountHolder { get; set; } // Chủ tài khoản
+        public string? BankAccountHolder { get; set; }
 
         public enum RequestStatus
         {
-            Pending = 0,    // Chờ duyệt
-            Approved = 1,   // Duyệt
-            Rejected = 2    // Từ chối
+            Pending = 0,
+            Approved = 1,
+            Rejected = 2
         }
 
         public RequestStatus Status { get; set; } = RequestStatus.Pending;
@@ -34,10 +34,10 @@ namespace CKCNNET.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? ReviewedAt { get; set; }
 
-        public int? ReviewedByAdminId { get; set; } // Admin duyệt
+        public int? ReviewedByAdminId { get; set; }
         public User? ReviewedByAdmin { get; set; }
 
         [StringLength(500)]
-        public string? AdminNotes { get; set; } // Ghi chú từ Admin
+        public string? AdminNotes { get; set; }
     }
 }

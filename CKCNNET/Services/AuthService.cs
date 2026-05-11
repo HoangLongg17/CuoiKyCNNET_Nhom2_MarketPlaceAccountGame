@@ -38,7 +38,7 @@ namespace CKCNNET.Services
                 Email = email,
                 PasswordHash = HashPassword(password),
                 PhoneNumber = phoneNumber,
-                RoleId = 1, // User role
+                RoleId = 1,
                 CreatedAt = DateTime.Now
             };
 

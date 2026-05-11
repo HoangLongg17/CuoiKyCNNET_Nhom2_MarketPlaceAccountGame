@@ -29,7 +29,7 @@
                         </div>
                     }
 
-                    <form method="post" class="needs-validation">
+                    <form method="post" class="needs-validation" enctype="multipart/form-data">
                         @Html.AntiForgeryToken()
 
                         <!-- Chọn Game -->
@@ -67,7 +67,7 @@
                             </label>
                             <div class="input-group input-group-lg">
                                 <input type="number" class="form-control" id="price" name="price" 
-                                       min="1000" step="1000" placeholder="100000" required>
+                                       min="1000" step="1" placeholder="100000" required>
                                 <span class="input-group-text">VND</span>
                             </div>
                             <small class="text-muted d-block mt-2">Giá tối thiểu: 1,000 VND</small>
@@ -117,6 +117,23 @@
                             </small>
                         </div>
 
+                        <!-- Hình ảnh -->
+                        <h5 class="mb-4">Hình ảnh Account (Tùy chọn)</h5>
+
+                        <div class="mb-4">
+                            <label for="images" class="form-label">
+                                <strong>Tải lên hình ảnh</strong>
+                            </label>
+                            <input type="file" class="form-control form-control-lg" id="images" name="images" 
+                                   multiple accept="image/*">
+                            <small class="text-muted d-block mt-2">
+                                Chọn nhiều ảnh để hiển thị chi tiết account. Tối đa 10 ảnh, mỗi ảnh dưới 5MB
+                            </small>
+                            <div id="imagePreview" class="mt-3"></div>
+                        </div>
+
+                        <hr class="my-5">
+
                         <!-- Thông báo chờ duyệt -->
                         <div class="alert alert-info" role="alert">
                             <h6 class="alert-heading">⏳ Chờ Admin Duyệt</h6>
@@ -163,3 +180,27 @@
         border-radius: 0.5rem;
     }
 </style>
+
+<script>
+document.getElementById('images').addEventListener('change', function(e) {
+    const preview = document.getElementById('imagePreview');
+    preview.innerHTML = '';
+    
+    Array.from(this.files).forEach((file, index) => {
+        if (index < 10) { // Tối đa 10 ảnh
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.style.width = '100px';
+                img.style.height = '100px';
+                img.style.margin = '5px';
+                img.style.borderRadius = '5px';
+                img.style.border = '1px solid #ddd';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>

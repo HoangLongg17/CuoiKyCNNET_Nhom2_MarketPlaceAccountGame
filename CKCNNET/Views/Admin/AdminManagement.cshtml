@@ -103,10 +103,6 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="@Url.Action("EditAdminBankInfo", new { id = admin.Id })" 
-                                               class="btn btn-sm btn-info" title="Cập nhật thông tin ngân hàng">
-                                                <i class="bi bi-bank"></i> Ngân hàng
-                                            </a>
                                             @if (admin.Id != (int?)Context.Session.GetInt32("UserId"))
                                             {
                                                 <form method="post" action="@Url.Action("DeleteAdmin")" style="display:inline;" 

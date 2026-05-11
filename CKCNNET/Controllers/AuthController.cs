@@ -105,7 +105,7 @@ namespace CKCNNET.Controllers
             return View(user);
         }
 
-        // Đăng ký làm Seller - Thay đổi Role
+        // Đăng ký làm Seller
         [HttpPost]
         public async Task<IActionResult> RegisterAsSeller(string reason, string bankAccount, string bankAccountHolder)
         {

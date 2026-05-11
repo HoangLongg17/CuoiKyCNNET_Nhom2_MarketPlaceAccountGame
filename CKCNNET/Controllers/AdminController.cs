@@ -328,13 +328,12 @@ namespace CKCNNET.Controllers
                 
                 if (user != null)
                 {
-                    // Lấy role "Seller"
                     var sellerRole = await _context.Roles
                         .FirstOrDefaultAsync(r => r.Name == "Seller");
                     
                     if (sellerRole != null)
                     {
-                        user.RoleId = sellerRole.Id;  // ← Đổi Role
+                        user.RoleId = sellerRole.Id;
                         user.BankAccount = request.BankAccount;
                         user.BankAccountHolder = request.BankAccountHolder;
                         user.UpdatedAt = DateTime.Now;
@@ -476,7 +475,7 @@ namespace CKCNNET.Controllers
         public async Task<IActionResult> SellerManagement()
         {
             var sellers = await _context.Users
-                .Where(u => u.RoleId == 2) // RoleId = 2 là Seller
+                .Where(u => u.RoleId == 2)
                 .Include(u => u.GameAccounts)
                 .OrderByDescending(u => u.CreatedAt)
                 .ToListAsync();
@@ -492,7 +491,7 @@ namespace CKCNNET.Controllers
                 .Include(u => u.Role)
                 .Include(u => u.GameAccounts)
                 .ThenInclude(ga => ga.Game)
-                .FirstOrDefaultAsync(u => u.Id == id && u.RoleId == 2); // RoleId = 2 là Seller
+                .FirstOrDefaultAsync(u => u.Id == id && u.RoleId == 2);
 
             if (seller == null)
                 return NotFound();
@@ -500,7 +499,7 @@ namespace CKCNNET.Controllers
             return View(seller);
         }
 
-        // Phế chức Seller về User - Đổi Role từ Seller → User
+        // Phế chức Seller về User
         [HttpPost]
         public async Task<IActionResult> RevokeSeller(int id)
         {
@@ -523,7 +522,7 @@ namespace CKCNNET.Controllers
                 if (seller == null)
                     return NotFound();
 
-                // Kiểm tra xem có phải Seller không (Role.Name == "Seller")
+                // Kiểm tra xem có phải Seller không
                 if (seller.Role?.Name != "Seller")
                 {
                     TempData["ErrorMessage"] = "User này không phải Seller!";
@@ -532,7 +531,7 @@ namespace CKCNNET.Controllers
 
                 // Kiểm tra xem Seller có account đang đăng bán (chưa bán) hay không
                 var activeAccounts = seller.GameAccounts
-                    .Where(ga => !ga.IsSold)  // Account chưa bán
+                    .Where(ga => !ga.IsSold)
                     .ToList();
 
                 if (activeAccounts.Any())
@@ -542,13 +541,12 @@ namespace CKCNNET.Controllers
                 }
 
                 // Nếu không có account đang đăng bán, phế chức
-                // Đổi Role từ Seller → User
                 var userRole = await _context.Roles
                     .FirstOrDefaultAsync(r => r.Name == "User");
                 
                 if (userRole != null)
                 {
-                    seller.RoleId = userRole.Id;  // ← Đổi Role về User
+                    seller.RoleId = userRole.Id;
                     seller.UpdatedAt = DateTime.Now;
                     _context.Users.Update(seller);
                     await _context.SaveChangesAsync();

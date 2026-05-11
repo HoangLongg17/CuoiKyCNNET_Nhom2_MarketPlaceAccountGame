@@ -34,6 +34,7 @@ namespace CKCNNET.Controllers
             var gameAccounts = await _context.GameAccounts
                 .Include(ga => ga.Game)
                 .Include(ga => ga.Seller)
+                .Include(ga => ga.Images)
                 .Where(ga => ga.GameId == gameId && ga.IsApproved && !ga.IsSold)
                 .OrderByDescending(ga => ga.CreatedAt)
                 .ToListAsync();
@@ -51,6 +52,7 @@ namespace CKCNNET.Controllers
             var accounts = await _context.GameAccounts
                 .Include(ga => ga.Game)
                 .Include(ga => ga.Seller)
+                .Include(ga => ga.Images)
                 .Where(ga => ga.IsApproved && !ga.IsSold && 
                        (ga.Game.Name.Contains(search) || ga.Description.Contains(search)))
                 .OrderByDescending(ga => ga.CreatedAt)

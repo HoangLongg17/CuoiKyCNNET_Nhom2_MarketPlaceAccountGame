@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using CKCNNET.Data;
 using CKCNNET.Models;
 using CKCNNET.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace CKCNNET.Controllers
 {
@@ -28,8 +30,7 @@ namespace CKCNNET.Controllers
 
             var user = await _context.Users.FindAsync(userId.Value);
     
-            // Nếu là Seller, cho phép tạo
-            if (user?.RoleId != 2) // RoleId = 2 là Seller
+            if (user?.RoleId == null || (user.RoleId != 2 && user.RoleId != 3))
             {
                 TempData["ErrorMessage"] = "Bạn không có quyền đăng bán account.";
                 return RedirectToAction("Index", "Home");
@@ -43,7 +44,7 @@ namespace CKCNNET.Controllers
         [RoleAuthorization("Seller", "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(GameAccount model)
+        public async Task<IActionResult> Create(GameAccount model, List<IFormFile> images)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (!userId.HasValue)
@@ -101,6 +102,45 @@ namespace CKCNNET.Controllers
 
                 _context.GameAccounts.Add(gameAccount);
                 await _context.SaveChangesAsync();
+
+                // Xử lý upload ảnh
+                if (images != null && images.Count > 0)
+                {
+                    string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "game-accounts");
+                    
+                    if (!Directory.Exists(uploadsFolder))
+                        Directory.CreateDirectory(uploadsFolder);
+
+                    foreach (var image in images.Take(10)) // Giới hạn 10 ảnh
+                    {
+                        if (image.Length > 5 * 1024 * 1024) // 5MB
+                        {
+                            TempData["WarningMessage"] = "Một số ảnh bị vượt quá 5MB, bỏ qua!";
+                            continue;
+                        }
+
+                        string fileName = $"{gameAccount.Id}_{Guid.NewGuid()}_{image.FileName}";
+                        string filePath = Path.Combine(uploadsFolder, fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+
+                        var gameAccountImage = new GameAccountImage
+                        {
+                            GameAccountId = gameAccount.Id,
+                            ImagePath = $"/uploads/game-accounts/{fileName}",
+                            FileName = image.FileName,
+                            UploadedAt = DateTime.Now
+                        };
+
+                        _context.GameAccountImages.Add(gameAccountImage);
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
                 string message = userRole == "Admin" 
                     ? "Đăng bán account thành công! Account sẽ hiển thị ngay trên marketplace."
                     : "Đăng bán account thành công! Admin sẽ duyệt yêu cầu của bạn sớm.";
@@ -127,10 +167,10 @@ namespace CKCNNET.Controllers
 
             var userRole = HttpContext.Session.GetString("UserRole");
 
-            // Include Purchases (with Buyer) and PaymentProofs so seller can review proofs in MyListings view
             IQueryable<GameAccount> query = _context.GameAccounts
                 .Include(ga => ga.Game)
                 .Include(ga => ga.Seller)
+                .Include(ga => ga.Images)
                 .Include(ga => ga.Purchases)
                     .ThenInclude(p => p.Buyer)
                 .Include(ga => ga.PaymentProofs);
@@ -157,6 +197,7 @@ namespace CKCNNET.Controllers
 
             var account = await _context.GameAccounts
                 .Include(ga => ga.Game)
+                .Include(ga => ga.Images)
                 .FirstOrDefaultAsync(ga => ga.Id == id);
 
             if (account == null)
@@ -180,7 +221,7 @@ namespace CKCNNET.Controllers
         [RoleAuthorization("Seller", "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, GameAccount model)
+        public async Task<IActionResult> Edit(int id, GameAccount model, List<IFormFile> images)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (!userId.HasValue)
@@ -222,8 +263,45 @@ namespace CKCNNET.Controllers
                 _context.GameAccounts.Update(account);
                 await _context.SaveChangesAsync();
 
+                // Xử lý upload ảnh mới
+                if (images != null && images.Count > 0)
+                {
+                    string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "game-accounts");
+                    
+                    if (!Directory.Exists(uploadsFolder))
+                        Directory.CreateDirectory(uploadsFolder);
+
+                    foreach (var image in images.Take(10))
+                    {
+                        if (image.Length > 5 * 1024 * 1024)
+                        {
+                            TempData["WarningMessage"] = "Một số ảnh bị vượt quá 5MB, bỏ qua!";
+                            continue;
+                        }
+
+                        string fileName = $"{account.Id}_{Guid.NewGuid()}_{image.FileName}";
+                        string filePath = Path.Combine(uploadsFolder, fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+
+                        var gameAccountImage = new GameAccountImage
+                        {
+                            GameAccountId = account.Id,
+                            ImagePath = $"/uploads/game-accounts/{fileName}",
+                            FileName = image.FileName
+                        };
+
+                        _context.GameAccountImages.Add(gameAccountImage);
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
                 TempData["SuccessMessage"] = "Cập nhật account thành công!";
-                return RedirectToAction("MyListings");
+                return RedirectToAction("Edit", new { id });
             }
             catch (Exception ex)
             {
@@ -231,6 +309,9 @@ namespace CKCNNET.Controllers
                 var games = await _context.Games.ToListAsync();
                 ViewBag.Games = games;
                 ViewBag.UserRole = userRole;
+                account = await _context.GameAccounts
+                    .Include(ga => ga.Images)
+                    .FirstOrDefaultAsync(ga => ga.Id == account.Id);
                 return View(account);
             }
         }
@@ -266,6 +347,48 @@ namespace CKCNNET.Controllers
             }
 
             return RedirectToAction("MyListings");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteImage(int imageId, int accountId)
+        {
+            try
+            {
+                var image = await _context.GameAccountImages.FindAsync(imageId);
+                if (image == null)
+                    return BadRequest("Ảnh không tồn tại");
+
+                var account = await _context.GameAccounts.FindAsync(accountId);
+                var userRole = HttpContext.Session.GetString("UserRole");
+                var userId = HttpContext.Session.GetInt32("UserId");
+
+                // Kiểm tra quyền
+                if (userRole != "Admin" && (account?.SellerId != userId.Value))
+                    return Unauthorized();
+
+                // Xóa file từ server
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", image.ImagePath.TrimStart('/'));
+                if (System.IO.File.Exists(filePath))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Lỗi xóa file: {ex.Message}");
+                    }
+                }
+
+                _context.GameAccountImages.Remove(image);
+                await _context.SaveChangesAsync();
+
+                return Ok("Xóa ảnh thành công");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi: {ex.Message}");
+            }
         }
     }
 }

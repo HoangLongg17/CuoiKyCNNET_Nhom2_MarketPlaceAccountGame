@@ -88,6 +88,33 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
+                                <!-- Hiển thị ảnh -->
+                                @if (account.Images != null && account.Images.Any())
+                                {
+                                    <div class="mb-3">
+                                        <strong>📸 Hình ảnh:</strong>
+                                        <div id="imageCarousel@(account.Id)" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                @foreach (var image in account.Images.Select((img, index) => new { img, index }))
+                                                {
+                                                    <div class="carousel-item @(image.index == 0 ? "active" : "")">
+                                                        <img src="@image.img.ImagePath" class="d-block w-100" style="max-height: 300px; object-fit: cover;">
+                                                    </div>
+                                                }
+                                            </div>
+                                            @if (account.Images.Count > 1)
+                                            {
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel@(account.Id)" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon"></span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel@(account.Id)" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon"></span>
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+
                                 <p><strong>Giá:</strong> @account.Price.ToString("N0") VND</p>
                                 <p><strong>Mô tả:</strong> @account.Description</p>
                                 <p><strong>Người bán:</strong> @account.Seller.Username</p>

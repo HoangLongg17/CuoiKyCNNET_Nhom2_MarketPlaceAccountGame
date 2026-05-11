@@ -65,7 +65,6 @@
                                 <span class="badge bg-success">@account.Price.ToString("N0") VND</span>
                             </td>
                             <td>
-                                @* Đồng bộ: nếu có giao dịch gần nhất thì hiển thị trạng thái giao dịch đó, ngược lại fallback theo IsApproved/IsSold *@
                                 @{
                                     var latestPurchase = account.Purchases?.OrderByDescending(p => p.PurchaseDate).FirstOrDefault();
                                 }
