@@ -22,6 +22,7 @@ namespace CKCNNET.Data
 
         public DbSet<PaymentProof> PaymentProofs { get; set; }
         public DbSet<GameAccountImage> GameAccountImages { get; set; }
+        public DbSet<PurchaseReport> PurchaseReports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -132,6 +133,18 @@ namespace CKCNNET.Data
                 .WithMany(ga => ga.Images)
                 .HasForeignKey(gai => gai.GameAccountId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PurchaseReport>()
+                .HasOne(pr => pr.Purchase)
+                .WithMany(p => p.Reports)
+                .HasForeignKey(pr => pr.PurchaseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PurchaseReport>()
+                .HasOne(pr => pr.Buyer)
+                .WithMany(u => u.Reports)
+                .HasForeignKey(pr => pr.BuyerId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         //method để hash password

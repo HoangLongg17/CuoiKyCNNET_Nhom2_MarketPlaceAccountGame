@@ -82,7 +82,18 @@
 
                                 <div class="row mb-3">
                                     <div class="col-sm-4"><strong>Người bán</strong></div>
-                                    <div class="col-sm-8">@p.GameAccount?.Seller?.Username (@p.GameAccount?.Seller?.Email)</div>
+                                    <div class="col-sm-8">
+                                        @p.GameAccount?.Seller?.Username 
+                                        <br>
+                                        <small class="text-muted">
+                                            Email: @p.GameAccount?.Seller?.Email<br>
+                                            Số điện thoại: @p.GameAccount?.Seller?.PhoneNumber<br>
+                                            @if (!string.IsNullOrEmpty(p.GameAccount?.Seller?.BankAccount))
+                                            {
+                                                <span>STK: @p.GameAccount.Seller.BankAccount (@p.GameAccount.Seller.BankAccountHolder)</span>
+                                            }
+                                        </small>
+                                    </div>
                                 </div>
 
                                 <div class="row mb-3">
@@ -215,14 +226,87 @@
                                 }
                             </div>
                             <div class="modal-footer">
-                                <a href="@Url.Action("GameDetails", "Home", new { gameId = p.GameAccount?.Game?.Id })" class="btn btn-outline-secondary">
-                                    🔎 Xem trang game
-                                </a>
+                                @if (p.Status == "Rejected")
+                                {
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" 
+                                            data-bs-target="#reportModal@(p.Id)" data-bs-dismiss="modal">
+                                        ⚠️ Báo cáo cho Admin
+                                    </button>
+                                }
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal Report -->
+                @if (p.Status == "Rejected")
+                {
+                    <div class="modal fade" id="reportModal@(p.Id)" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-warning">
+                                    <h5 class="modal-title">⚠️ Báo cáo đơn mua - #@p.Id</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="post" action="@Url.Action("ReportPurchase", "Cart")">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="purchaseId" value="@p.Id" />
+                                    
+                                    <div class="modal-body">
+                                        <div class="alert alert-info" role="alert">
+                                            <strong>ℹ️ Khi báo cáo được duyệt:</strong>
+                                            <ul class="mb-0 mt-2">
+                                                <li>Admin sẽ liên hệ với seller</li>
+                                                <li>Yêu cầu seller hoàn tiền cho bạn</li>
+                                                <li>Bạn cần liên hệ lại với seller nếu không nhận được tiền</li>
+                                                <li>Seller vi phạm có thể bị xử phạt/khóa tài khoản</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mb-3 bg-light p-3 rounded">
+                                            <strong>📞 Thông tin liên hệ Seller:</strong>
+                                            <p class="mb-1">Username: @p.GameAccount?.Seller?.Username</p>
+                                            <p class="mb-1">Email: @p.GameAccount?.Seller?.Email</p>
+                                            <p class="mb-1">Số điện thoại: @p.GameAccount?.Seller?.PhoneNumber</p>
+                                            @if (!string.IsNullOrEmpty(p.GameAccount?.Seller?.BankAccount))
+                                            {
+                                                <p class="mb-0">
+                                                    STK: <span class="badge bg-secondary">@p.GameAccount.Seller.BankAccount</span>
+                                                    <br>
+                                                    <small>Chủ TK: @p.GameAccount.Seller.BankAccountHolder</small>
+                                                </p>
+                                            }
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong>🚩 Lý do báo cáo</strong></label>
+                                            <select class="form-select" name="reason" required>
+                                                <option value="">-- Chọn lý do --</option>
+                                                <option value="Seller đã nhận tiền nhưng từ chối">Seller đã nhận tiền nhưng từ chối</option>
+                                                <option value="Account không như mô tả">Account không như mô tả</option>
+                                                <option value="Account đã bị khóa">Account đã bị khóa</option>
+                                                <option value="Lý do khác">Lý do khác</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong>📝 Mô tả chi tiết</strong></label>
+                                            <textarea class="form-control" name="description" rows="4" 
+                                                      placeholder="Mô tả chi tiết vấn đề để giúp admin xử lý..." required></textarea>
+                                            <small class="text-muted">VD: Đã thanh toán 500K ngày 10/5, seller đã xác nhận nhưng sau đó từ chối không cung cấp tài khoản</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                        <button type="submit" class="btn btn-warning">📤 Gửi báo cáo</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
             }
         </div>
     }

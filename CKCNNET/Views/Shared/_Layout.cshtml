@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/css/custom-style.css">
 </head>
 
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="@Url.Action("Index", "Home")">🎮 GameAccount</a>
@@ -46,6 +46,17 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Dashboard", "Admin")">⚙️ Admin Panel</a>
+                            </li>
+                            <!-- Thêm vào menu Admin -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("PurchaseReports", "Admin")">
+                                    <i class="bi bi-exclamation-triangle"></i> 
+                                    <span>Báo cáo mua hàng</span>
+                                    @if (ViewBag.PendingReportsCount > 0)
+                                    {
+                                        <span class="badge bg-danger rounded-pill">@ViewBag.PendingReportsCount</span>
+                                    }
+                                </a>
                             </li>
                         }
 
@@ -115,11 +126,11 @@
         </div>
     }
 
-    <main>
+    <main style="flex: 1;">
         @RenderBody()
     </main>
 
-    <footer>
+    <footer style="margin-top: auto; padding-top: 50px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">

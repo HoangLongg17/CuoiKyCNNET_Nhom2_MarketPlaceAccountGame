@@ -409,5 +409,62 @@ namespace CKCNNET.Controllers
 
             return View(purchases);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ReportPurchase(int purchaseId, string reason, string description)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (!userId.HasValue)
+                return RedirectToAction("Login", "Auth");
+
+            try
+            {
+                var purchase = await _context.Purchases
+                    .Include(p => p.Reports)
+                    .FirstOrDefaultAsync(p => p.Id == purchaseId);
+
+                if (purchase == null)
+                    return NotFound("Đơn mua không tồn tại");
+
+                // Kiểm tra quyền (chỉ người mua mới được report)
+                if (purchase.BuyerId != userId.Value)
+                    return Unauthorized();
+
+                // Kiểm tra trạng thái (chỉ report được những đơn bị từ chối)
+                if (purchase.Status != "Rejected")
+                {
+                    TempData["ErrorMessage"] = "Chỉ có thể report những đơn mua bị từ chối!";
+                    return RedirectToAction("Purchases");
+                }
+
+                // Kiểm tra đã report chưa
+                if (purchase.Reports?.Any() == true)
+                {
+                    TempData["ErrorMessage"] = "Bạn đã báo cáo đơn này rồi!";
+                    return RedirectToAction("Purchases");
+                }
+
+                var report = new PurchaseReport
+                {
+                    PurchaseId = purchaseId,
+                    BuyerId = userId.Value,
+                    Reason = reason,
+                    Description = description,
+                    Status = "Pending",
+                    ReportedDate = DateTime.Now
+                };
+
+                _context.PurchaseReports.Add(report);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Báo cáo đã được gửi cho admin. Cảm ơn bạn!";
+                return RedirectToAction("Purchases");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Lỗi: {ex.Message}";
+                return RedirectToAction("Purchases");
+            }
+        }
     }
 }

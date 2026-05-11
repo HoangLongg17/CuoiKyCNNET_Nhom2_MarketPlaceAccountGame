@@ -40,10 +40,15 @@ namespace CKCNNET.Controllers
 
             var totalUsers = await _context.Users.CountAsync();
 
+            // Lấy số báo cáo chưa xử lý
+            var pendingReports = await _context.PurchaseReports
+                .CountAsync(r => r.Status == "Pending");
+            
             ViewBag.PendingSellerRequests = pendingSellerRequests;
             ViewBag.PendingGameAccounts = pendingGameAccounts;
             ViewBag.TotalSellers = totalSellers;
             ViewBag.TotalUsers = totalUsers;
+            ViewBag.PendingReportsCount = pendingReports;
 
             return View();
         }
@@ -589,6 +594,85 @@ namespace CKCNNET.Controllers
             {
                 TempData["ErrorMessage"] = "Lỗi: " + ex.Message;
                 return RedirectToAction("SellerDetail", new { id = sellerId });
+            }
+        }
+
+        #endregion
+
+        #region === Report Management ===
+
+        // Danh sách các báo cáo
+        [HttpGet]
+        public async Task<IActionResult> PurchaseReports()
+        {
+            var reports = await _context.PurchaseReports
+                .Include(r => r.Buyer)
+                .Include(r => r.Purchase)
+                    .ThenInclude(p => p.GameAccount)
+                        .ThenInclude(ga => ga.Game)
+                .Include(r => r.Purchase)
+                    .ThenInclude(p => p.GameAccount)
+                        .ThenInclude(ga => ga.Seller)
+                .OrderByDescending(r => r.ReportedDate)
+                .ToListAsync();
+
+            ViewBag.PendingReportsCount = reports.Count(r => r.Status == "Pending");
+            return View(reports);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ApproveReport(int reportId)
+        {
+            try
+            {
+                var report = await _context.PurchaseReports
+                    .Include(r => r.Purchase)
+                        .ThenInclude(p => p.GameAccount)
+                    .FirstOrDefaultAsync(r => r.Id == reportId);
+
+                if (report == null)
+                    return NotFound();
+
+                report.Status = "Resolved";
+                report.ResolvedDate = DateTime.Now;
+
+                _context.PurchaseReports.Update(report);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "✅ Báo cáo đã được duyệt! Admin sẽ liên hệ với seller để yêu cầu hoàn tiền.";
+                return RedirectToAction("PurchaseReports");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"❌ Lỗi: {ex.Message}";
+                return RedirectToAction("PurchaseReports");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DismissReport(int reportId)
+        {
+            try
+            {
+                var report = await _context.PurchaseReports
+                    .FirstOrDefaultAsync(r => r.Id == reportId);
+
+                if (report == null)
+                    return NotFound();
+
+                report.Status = "Dismissed";
+                report.ResolvedDate = DateTime.Now;
+
+                _context.PurchaseReports.Update(report);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "📋 Báo cáo đã bị bác bỏ.";
+                return RedirectToAction("PurchaseReports");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"❌ Lỗi: {ex.Message}";
+                return RedirectToAction("PurchaseReports");
             }
         }
 

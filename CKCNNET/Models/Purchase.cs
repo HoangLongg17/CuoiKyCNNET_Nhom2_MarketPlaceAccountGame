@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace CKCNNET.Models
 {
@@ -20,5 +21,7 @@ namespace CKCNNET.Models
         public string? AccountPassword { get; set; }
 
         public string? RejectionReason { get; set; }
+        
+        public ICollection<PurchaseReport> Reports { get; set; } = new List<PurchaseReport>();
     }
 }
