@@ -47,7 +47,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Dashboard", "Admin")">⚙️ Admin Panel</a>
                             </li>
-                            <!-- Thêm vào menu Admin -->
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("PurchaseReports", "Admin")">
                                     <i class="bi bi-exclamation-triangle"></i> 
@@ -56,6 +55,12 @@
                                     {
                                         <span class="badge bg-danger rounded-pill">@ViewBag.PendingReportsCount</span>
                                     }
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ChangePassword", "Auth")">
+                                    <i class="bi bi-key"></i> 
+                                    <span>Đổi mật khẩu</span>
                                 </a>
                             </li>
                         }
