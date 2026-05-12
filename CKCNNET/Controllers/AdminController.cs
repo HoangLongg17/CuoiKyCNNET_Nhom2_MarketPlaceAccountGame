@@ -7,6 +7,7 @@ using CKCNNET.Data;
 using CKCNNET.Models;
 using CKCNNET.Authorization;
 using CKCNNET.Services;
+using System.Text.RegularExpressions;
 
 namespace CKCNNET.Controllers
 {
@@ -35,7 +36,7 @@ namespace CKCNNET.Controllers
                 .CountAsync();
 
             var totalSellers = await _context.Users
-                .Where(u => u.RoleId == 2) // RoleId = 2 là Seller
+                .Where(u => u.RoleId == 2)
                 .CountAsync();
 
             var totalUsers = await _context.Users.CountAsync();
@@ -77,19 +78,16 @@ namespace CKCNNET.Controllers
 
         // Xử lý thêm Admin mới
         [HttpPost]
-        public async Task<IActionResult> AddAdmin(string username, string email, string password, string confirmPassword, string phoneNumber)
+        public async Task<IActionResult> AddAdmin(string username, string email, string password, 
+            string confirmPassword, string phoneNumber)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+                // Validate dữ liệu
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || 
+                    string.IsNullOrWhiteSpace(password))
                 {
                     TempData["ErrorMessage"] = "Vui lòng điền đầy đủ thông tin!";
-                    return View();
-                }
-
-                if (password != confirmPassword)
-                {
-                    TempData["ErrorMessage"] = "Mật khẩu không khớp!";
                     return View();
                 }
 
@@ -99,48 +97,66 @@ namespace CKCNNET.Controllers
                     return View();
                 }
 
-                // Kiểm tra username đã tồn tại
-                var existingUserByUsername = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
-                if (existingUserByUsername != null)
+                if (password != confirmPassword)
+                {
+                    TempData["ErrorMessage"] = "Mật khẩu không khớp!";
+                    return View();
+                }
+
+                if (username.Length < 3)
+                {
+                    TempData["ErrorMessage"] = "Username phải có ít nhất 3 ký tự!";
+                    return View();
+                }
+
+                // Validate email format
+                if (!Regex.IsMatch(email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$"))
+                {
+                    TempData["ErrorMessage"] = "Email không hợp lệ!";
+                    return View();
+                }
+
+                if (!string.IsNullOrWhiteSpace(phoneNumber) && 
+                    !Regex.IsMatch(phoneNumber, @"^[0-9]{10,11}$"))
+                {
+                    TempData["ErrorMessage"] = "Số điện thoại phải chứa 10-11 chữ số!";
+                    return View();
+                }
+
+                if (await _context.Users.AnyAsync(u => u.Email == email))
+                {
+                    TempData["ErrorMessage"] = "Email này đã được đăng ký!";
+                    return View();
+                }
+
+                if (await _context.Users.AnyAsync(u => u.Username == username))
                 {
                     TempData["ErrorMessage"] = "Username này đã tồn tại!";
                     return View();
                 }
 
-                // Kiểm tra email đã tồn tại
-                var existingUserByEmail = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
-                if (existingUserByEmail != null)
+                if (!string.IsNullOrWhiteSpace(phoneNumber) && 
+                    await _context.Users.AnyAsync(u => u.PhoneNumber == phoneNumber))
                 {
-                    TempData["ErrorMessage"] = "Email này đã tồn tại!";
+                    TempData["ErrorMessage"] = "Số điện thoại này đã được đăng ký!";
                     return View();
                 }
 
-                // Lấy role Admin
-                var adminRole = await _context.Roles
-                    .FirstOrDefaultAsync(r => r.Name == "Admin");
-                if (adminRole == null)
-                {
-                    TempData["ErrorMessage"] = "Không tìm thấy role Admin!";
-                    return View();
-                }
-
-                // Tạo user Admin mới
-                var newAdmin = new User
+                // Tạo admin mới
+                var user = new User
                 {
                     Username = username,
                     Email = email,
                     PasswordHash = HashPassword(password),
                     PhoneNumber = phoneNumber,
-                    RoleId = adminRole.Id,
+                    RoleId = 2, // Admin role
                     CreatedAt = DateTime.Now
                 };
 
-                _context.Users.Add(newAdmin);
+                _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
-                TempData["SuccessMessage"] = $"Đã thêm Admin '{username}' thành công!";
+                TempData["SuccessMessage"] = "Thêm Admin thành công!";
                 return RedirectToAction("AdminManagement");
             }
             catch (Exception ex)

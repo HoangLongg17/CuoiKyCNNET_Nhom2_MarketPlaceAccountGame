@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CKCNNET.Data;
 using CKCNNET.Models;
@@ -28,9 +29,27 @@ namespace CKCNNET.Services
 
         public async Task<User> RegisterAsync(string username, string email, string password, string phoneNumber)
         {
-            // Kiểm tra email đã tồn tại
+            if (!Regex.IsMatch(email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$"))
+                throw new Exception("Email không hợp lệ!");
+
+            if (!string.IsNullOrWhiteSpace(phoneNumber) && !Regex.IsMatch(phoneNumber, @"^[0-9]{10,11}$"))
+                throw new Exception("Số điện thoại phải chứa 10-11 chữ số!");
+
+            if (password.Length < 8)
+                throw new Exception("Mật khẩu phải có ít nhất 8 ký tự!");
+
+            if (string.IsNullOrWhiteSpace(username) || username.Length < 3)
+                throw new Exception("Username phải có ít nhất 3 ký tự!");
+
             if (await _context.Users.AnyAsync(u => u.Email == email))
                 throw new Exception("Email đã được đăng ký!");
+
+            if (await _context.Users.AnyAsync(u => u.Username == username))
+                throw new Exception("Username đã tồn tại!");
+
+            if (!string.IsNullOrWhiteSpace(phoneNumber) && 
+                await _context.Users.AnyAsync(u => u.PhoneNumber == phoneNumber))
+                throw new Exception("Số điện thoại này đã được đăng ký!");
 
             var user = new User
             {
